@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"math"
 	"os"
 	"sort"
 	"sync"
@@ -161,6 +162,15 @@ func (b *Backup) Run(ctx context.Context) error {
 	}
 }
 
+type progressTracker struct {
+	percentage int32
+	sync.Mutex
+}
+
+var progress = progressTracker{
+	percentage: -1,
+}
+
 // update updates the status lines.
 func (b *Backup) update(total, processed counter, errors uint, currentFiles map[string]struct{}, secs uint64) {
 	status := statusUpdate{
@@ -175,7 +185,9 @@ func (b *Backup) update(total, processed counter, errors uint, currentFiles map[
 	}
 
 	if total.Bytes > 0 {
-		status.PercentDone = float64(processed.Bytes) / float64(total.Bytes)
+		status.PercentDone = float64(processed.Bytes*100) / float64(total.Bytes)
+		// keep only up to 2 decimal point
+		status.PercentDone = (math.Round(status.PercentDone * 100)) / 100
 	}
 
 	for filename := range currentFiles {
@@ -183,7 +195,14 @@ func (b *Backup) update(total, processed counter, errors uint, currentFiles map[
 	}
 	sort.Strings(status.CurrentFiles)
 
-	b.print(status)
+	// write status  message only if there is at least 1% progress since last update.
+	if int32(status.PercentDone) > progress.percentage {
+		progress.Lock()
+		progress.percentage = int32(status.PercentDone)
+		progress.Unlock()
+		// write the status message
+		b.print(status)
+	}
 }
 
 // ScannerError is the error callback function for the scanner, it prints the
