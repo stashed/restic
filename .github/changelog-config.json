@@ -1,0 +1,26 @@
+{
+  "categories": [
+    {
+      "title": "### Features",
+      "labels": ["feature"]
+    },
+    {
+      "title": "### Enhancements",
+      "labels": ["enhancement","improvement"]
+    },
+    {
+      "title": "### Bug Fixes",
+      "labels": ["fix","bug","bug-fix"]
+    },
+    {
+      "title": "### Tests",
+      "labels": ["test"]
+    }
+  ],
+  "sort": "ASC",
+  "template": "${{CHANGELOG}} \n---\n ${{UNCATEGORIZED}}",
+  "pr_template": "- ${{TITLE}} - #${{NUMBER}} (${{AUTHOR}})",
+  "empty_template": "No change found since last release.",
+  "max_pull_requests": 1000,
+  "max_back_track_time_days": 1000
+}
