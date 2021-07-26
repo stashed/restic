@@ -54,7 +54,7 @@ jobs:
           DOCKER_TOKEN: ${{ secrets.LGTM_GITHUB_TOKEN }}
         run: |
           # login into the registry
-          docker login --username ${USERNAME} --password ${DOCKER_TOKEN}
+          docker login ghcr.io --username ${USERNAME} --password ${DOCKER_TOKEN}
           # build the docker image
           docker build --rm -t ${REGISTRY}/restic:${TAG} -f $(pwd)/docker/Dockerfile .
           # push image into the registry
