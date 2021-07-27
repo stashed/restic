@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	mrand "math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -14,8 +15,6 @@ import (
 	"testing"
 
 	"github.com/restic/restic/internal/errors"
-
-	mrand "math/rand"
 )
 
 // Assert fails the test if the condition is false.

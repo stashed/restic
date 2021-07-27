@@ -7,14 +7,12 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"github.com/restic/restic/internal/errors"
-	"github.com/restic/restic/internal/restic"
-
+	"github.com/cenkalti/backoff/v4"
 	"github.com/restic/restic/internal/backend"
 	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/fs"
-
-	"github.com/cenkalti/backoff/v4"
+	"github.com/restic/restic/internal/restic"
 )
 
 // Local is a backend in a local directory.

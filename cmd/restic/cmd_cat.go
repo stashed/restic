@@ -3,12 +3,11 @@ package main
 import (
 	"encoding/json"
 
-	"github.com/spf13/cobra"
-
 	"github.com/restic/restic/internal/backend"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/repository"
 	"github.com/restic/restic/internal/restic"
+	"github.com/spf13/cobra"
 )
 
 var cmdCat = &cobra.Command{

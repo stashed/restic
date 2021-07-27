@@ -7,9 +7,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/restic/restic/internal/errors"
-
 	"github.com/minio/sha256-simd"
+	"github.com/restic/restic/internal/errors"
 )
 
 // Hash returns the ID for data.

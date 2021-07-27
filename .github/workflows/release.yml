@@ -6,46 +6,16 @@ on:
       - "*.*"
 
 jobs:
-  build:
+  release:
     name: Release
     runs-on: ubuntu-latest
-    env:
-      BUILDER_IMAGE: appscodeci/golang-dev:1.16
-      GO_VERSION: 1.16
     steps:
       - uses: actions/checkout@v1
 
-      - name: Export Environment Variables
+      - name: Build Release Binaries
         run: |
-          echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-          echo "OUTPUT_DIR=$(pwd)/output" >> $GITHUB_ENV
-
-      - name: Build Binaries
-        run: |
-          #  create bin and cache directory
-          mkdir -p ${OUTPUT_DIR}/bin ${OUTPUT_DIR}/cache
-
           # build binaries
-          docker run --rm \
-              --volume "$PWD:/src" \
-              -u $(id -u):$(id -g) \
-              -w /src \
-              -v ${OUTPUT_DIR}/bin/:/go/bin   \
-              -v ${OUTPUT_DIR}/cache:/.cache  \
-              ${BUILDER_IMAGE} \
-              go run /src/helpers/build-release-binaries/main.go --version ${TAG} --source="/src" --output="/go/bin/"
-
-      - name: List Files
-        run: |
-          ls -lah ${OUTPUT_DIR}/bin/*
-
-      - name: Build restic with alpine image
-        run: |
-          docker run --rm \
-          -v "$(pwd)":/go/src/github.com/restic/restic \
-          -w /go/src/github.com/restic/restic \
-          golang:${GO_VERSION}-alpine \
-          go run build.go
+          make build
 
       - name: Publish image into GitHub Container Registry
         env:
@@ -55,13 +25,8 @@ jobs:
         run: |
           # login into the registry
           docker login ghcr.io --username ${USERNAME} --password ${DOCKER_TOKEN}
-          # build the docker image
-          docker build --rm -t ${REGISTRY}/restic:${TAG} -f $(pwd)/docker/Dockerfile .
-          # push image into the registry
-          docker push ${REGISTRY}/restic:${TAG}
-          # push image with "latest" tag
-          docker tag ${REGISTRY}/restic:${TAG} ${REGISTRY}/restic:latest
-          docker push ${REGISTRY}/restic:latest
+          # build and push the docker image
+          make push
 
       - name: Publish image into DockerHub
         env:
@@ -71,13 +36,8 @@ jobs:
         run: |
           # login into the registry
           docker login --username ${USERNAME} --password ${DOCKER_TOKEN}
-          # build the docker image
-          docker build --rm -t ${REGISTRY}/restic:${TAG} -f $(pwd)/docker/Dockerfile .
-          # push image into the registry
-          docker push ${REGISTRY}/restic:${TAG}
-          # push image with "latest" tag
-          docker tag ${REGISTRY}/restic:${TAG} ${REGISTRY}/restic:latest
-          docker push ${REGISTRY}/restic:latest
+          # build and push the docker image
+          make push
 
       - name: Build Changelog
         id: changelog-builder

@@ -11,10 +11,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/errors"
 	"golang.org/x/sync/errgroup"
-
-	"github.com/restic/restic/internal/debug"
 )
 
 // Lock represents a process locking the repository for an operation.

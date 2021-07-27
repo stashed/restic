@@ -6,9 +6,8 @@ import (
 
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/restic"
-	"golang.org/x/sync/errgroup"
-
 	"github.com/spf13/cobra"
+	"golang.org/x/sync/errgroup"
 )
 
 var cmdCopy = &cobra.Command{

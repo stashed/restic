@@ -10,14 +10,12 @@ import (
 	"path"
 	"time"
 
-	"github.com/restic/restic/internal/errors"
-	"github.com/restic/restic/internal/restic"
-
-	"github.com/restic/restic/internal/backend"
-	"github.com/restic/restic/internal/debug"
-
 	"github.com/cenkalti/backoff/v4"
 	"github.com/pkg/sftp"
+	"github.com/restic/restic/internal/backend"
+	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/errors"
+	"github.com/restic/restic/internal/restic"
 )
 
 // SFTP is a backend in a directory accessed via SFTP.

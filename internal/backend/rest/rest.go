@@ -11,14 +11,12 @@ import (
 	"path"
 	"strings"
 
-	"golang.org/x/net/context/ctxhttp"
-
+	"github.com/cenkalti/backoff/v4"
 	"github.com/restic/restic/internal/backend"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/restic"
-
-	"github.com/cenkalti/backoff/v4"
+	"golang.org/x/net/context/ctxhttp"
 )
 
 // make sure the rest backend implements restic.Backend

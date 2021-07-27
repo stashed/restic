@@ -7,17 +7,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spf13/cobra"
-
-	"github.com/restic/restic/internal/debug"
-	"github.com/restic/restic/internal/errors"
-	"github.com/restic/restic/internal/restic"
-
-	resticfs "github.com/restic/restic/internal/fs"
-	"github.com/restic/restic/internal/fuse"
-
 	systemFuse "bazil.org/fuse"
 	"bazil.org/fuse/fs"
+	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/errors"
+	resticfs "github.com/restic/restic/internal/fs"
+	"github.com/restic/restic/internal/fuse"
+	"github.com/restic/restic/internal/restic"
+	"github.com/spf13/cobra"
 )
 
 var cmdMount = &cobra.Command{

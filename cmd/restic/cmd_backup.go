@@ -14,9 +14,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spf13/cobra"
-	tomb "gopkg.in/tomb.v2"
-
 	"github.com/restic/restic/internal/archiver"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/errors"
@@ -27,6 +24,8 @@ import (
 	"github.com/restic/restic/internal/ui"
 	"github.com/restic/restic/internal/ui/json"
 	"github.com/restic/restic/internal/ui/termstatus"
+	"github.com/spf13/cobra"
+	tomb "gopkg.in/tomb.v2"
 )
 
 var cmdBackup = &cobra.Command{

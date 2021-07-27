@@ -5,9 +5,8 @@ package restic
 import (
 	"syscall"
 
-	"github.com/restic/restic/internal/errors"
-
 	"github.com/pkg/xattr"
+	"github.com/restic/restic/internal/errors"
 )
 
 // Getxattr retrieves extended attribute data associated with path.

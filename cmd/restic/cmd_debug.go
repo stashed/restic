@@ -14,15 +14,14 @@ import (
 	"sort"
 	"time"
 
-	"github.com/spf13/cobra"
-	"golang.org/x/sync/errgroup"
-
 	"github.com/restic/restic/internal/backend"
 	"github.com/restic/restic/internal/crypto"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/pack"
 	"github.com/restic/restic/internal/repository"
 	"github.com/restic/restic/internal/restic"
+	"github.com/spf13/cobra"
+	"golang.org/x/sync/errgroup"
 )
 
 var cmdDebug = &cobra.Command{

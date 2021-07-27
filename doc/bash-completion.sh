@@ -1,43 +1,39 @@
 # bash completion for restic                               -*- shell-script -*-
 
-__restic_debug()
-{
+__restic_debug() {
     if [[ -n ${BASH_COMP_DEBUG_FILE} ]]; then
-        echo "$*" >> "${BASH_COMP_DEBUG_FILE}"
+        echo "$*" >>"${BASH_COMP_DEBUG_FILE}"
     fi
 }
 
 # Homebrew on Macs have version 1.3 of bash-completion which doesn't include
 # _init_completion. This is a very minimal version of that function.
-__restic_init_completion()
-{
+__restic_init_completion() {
     COMPREPLY=()
     _get_comp_words_by_ref "$@" cur prev words cword
 }
 
-__restic_index_of_word()
-{
+__restic_index_of_word() {
     local w word=$1
     shift
     index=0
     for w in "$@"; do
         [[ $w = "$word" ]] && return
-        index=$((index+1))
+        index=$((index + 1))
     done
     index=-1
 }
 
-__restic_contains_word()
-{
-    local w word=$1; shift
+__restic_contains_word() {
+    local w word=$1
+    shift
     for w in "$@"; do
         [[ $w = "$word" ]] && return
     done
     return 1
 }
 
-__restic_handle_reply()
-{
+__restic_handle_reply() {
     __restic_debug "${FUNCNAME[0]}"
     case $cur in
         -*)
@@ -50,7 +46,7 @@ __restic_handle_reply()
             else
                 allflags=("${flags[*]} ${two_word_flags[*]}")
             fi
-            COMPREPLY=( $(compgen -W "${allflags[*]}" -- "$cur") )
+            COMPREPLY=($(compgen -W "${allflags[*]}" -- "$cur"))
             if [[ $(type -t compopt) = "builtin" ]]; then
                 [[ "${COMPREPLY[0]}" == *= ]] || compopt +o nospace
             fi
@@ -75,7 +71,7 @@ __restic_handle_reply()
                     fi
                 fi
             fi
-            return 0;
+            return 0
             ;;
     esac
 
@@ -100,20 +96,20 @@ __restic_handle_reply()
     if [[ ${#must_have_one_flag[@]} -ne 0 ]]; then
         completions+=("${must_have_one_flag[@]}")
     fi
-    COMPREPLY=( $(compgen -W "${completions[*]}" -- "$cur") )
+    COMPREPLY=($(compgen -W "${completions[*]}" -- "$cur"))
 
     if [[ ${#COMPREPLY[@]} -eq 0 && ${#noun_aliases[@]} -gt 0 && ${#must_have_one_noun[@]} -ne 0 ]]; then
-        COMPREPLY=( $(compgen -W "${noun_aliases[*]}" -- "$cur") )
+        COMPREPLY=($(compgen -W "${noun_aliases[*]}" -- "$cur"))
     fi
 
     if [[ ${#COMPREPLY[@]} -eq 0 ]]; then
-		if declare -F __restic_custom_func >/dev/null; then
-			# try command name qualified custom func
-			__restic_custom_func
-		else
-			# otherwise fall back to unqualified for compatibility
-			declare -F __custom_func >/dev/null && __custom_func
-		fi
+        if declare -F __restic_custom_func >/dev/null; then
+            # try command name qualified custom func
+            __restic_custom_func
+        else
+            # otherwise fall back to unqualified for compatibility
+            declare -F __custom_func >/dev/null && __custom_func
+        fi
     fi
 
     # available in bash-completion >= 2, not always present on macOS
@@ -124,25 +120,22 @@ __restic_handle_reply()
     # If there is only 1 completion and it is a flag with an = it will be completed
     # but we don't want a space after the =
     if [[ "${#COMPREPLY[@]}" -eq "1" ]] && [[ $(type -t compopt) = "builtin" ]] && [[ "${COMPREPLY[0]}" == --*= ]]; then
-       compopt -o nospace
+        compopt -o nospace
     fi
 }
 
 # The arguments should be in the form "ext1|ext2|extn"
-__restic_handle_filename_extension_flag()
-{
+__restic_handle_filename_extension_flag() {
     local ext="$1"
     _filedir "@(${ext})"
 }
 
-__restic_handle_subdirs_in_dir_flag()
-{
+__restic_handle_subdirs_in_dir_flag() {
     local dir="$1"
     pushd "${dir}" >/dev/null 2>&1 && _filedir -d && popd >/dev/null 2>&1
 }
 
-__restic_handle_flag()
-{
+__restic_handle_flag() {
     __restic_debug "${FUNCNAME[0]}: c is $c words[c] is ${words[c]}"
 
     # if a command required a flag, and we found it, unset must_have_one_flag()
@@ -151,8 +144,8 @@ __restic_handle_flag()
     # if the word contained an =
     if [[ ${words[c]} == *"="* ]]; then
         flagvalue=${flagname#*=} # take in as flagvalue after the =
-        flagname=${flagname%=*} # strip everything after the =
-        flagname="${flagname}=" # but put the = back
+        flagname=${flagname%=*}  # strip everything after the =
+        flagname="${flagname}="  # but put the = back
     fi
     __restic_debug "${FUNCNAME[0]}: looking for ${flagname}"
     if __restic_contains_word "${flagname}" "${must_have_one_flag[@]}"; then
@@ -161,16 +154,16 @@ __restic_handle_flag()
 
     # if you set a flag which only applies to this command, don't show subcommands
     if __restic_contains_word "${flagname}" "${local_nonpersistent_flags[@]}"; then
-      commands=()
+        commands=()
     fi
 
     # keep flag value with flagname as flaghash
     # flaghash variable is an associative array which is only supported in bash > 3.
     if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
-        if [ -n "${flagvalue}" ] ; then
+        if [ -n "${flagvalue}" ]; then
             flaghash[${flagname}]=${flagvalue}
-        elif [ -n "${words[ $((c+1)) ]}" ] ; then
-            flaghash[${flagname}]=${words[ $((c+1)) ]}
+        elif [ -n "${words[$((c + 1))]}" ]; then
+            flaghash[${flagname}]=${words[$((c + 1))]}
         else
             flaghash[${flagname}]="true" # pad "true" for bool flag
         fi
@@ -178,20 +171,19 @@ __restic_handle_flag()
 
     # skip the argument to a two word flag
     if [[ ${words[c]} != *"="* ]] && __restic_contains_word "${words[c]}" "${two_word_flags[@]}"; then
-			  __restic_debug "${FUNCNAME[0]}: found a flag ${words[c]}, skip the next argument"
-        c=$((c+1))
+        __restic_debug "${FUNCNAME[0]}: found a flag ${words[c]}, skip the next argument"
+        c=$((c + 1))
         # if we are looking for a flags value, don't show commands
         if [[ $c -eq $cword ]]; then
             commands=()
         fi
     fi
 
-    c=$((c+1))
+    c=$((c + 1))
 
 }
 
-__restic_handle_noun()
-{
+__restic_handle_noun() {
     __restic_debug "${FUNCNAME[0]}: c is $c words[c] is ${words[c]}"
 
     if __restic_contains_word "${words[c]}" "${must_have_one_noun[@]}"; then
@@ -201,11 +193,10 @@ __restic_handle_noun()
     fi
 
     nouns+=("${words[c]}")
-    c=$((c+1))
+    c=$((c + 1))
 }
 
-__restic_handle_command()
-{
+__restic_handle_command() {
     __restic_debug "${FUNCNAME[0]}: c is $c words[c] is ${words[c]}"
 
     local next_command
@@ -218,13 +209,12 @@ __restic_handle_command()
             next_command="_${words[c]//:/__}"
         fi
     fi
-    c=$((c+1))
+    c=$((c + 1))
     __restic_debug "${FUNCNAME[0]}: looking for ${next_command}"
     declare -F "$next_command" >/dev/null && $next_command
 }
 
-__restic_handle_word()
-{
+__restic_handle_word() {
     if [[ $c -ge $cword ]]; then
         __restic_handle_reply
         return
@@ -250,8 +240,7 @@ __restic_handle_word()
     __restic_handle_word
 }
 
-_restic_backup()
-{
+_restic_backup() {
     last_command="restic_backup"
 
     command_aliases=()
@@ -366,8 +355,7 @@ _restic_backup()
     noun_aliases=()
 }
 
-_restic_cache()
-{
+_restic_cache() {
     last_command="restic_cache"
 
     command_aliases=()
@@ -429,8 +417,7 @@ _restic_cache()
     noun_aliases=()
 }
 
-_restic_cat()
-{
+_restic_cat() {
     last_command="restic_cat"
 
     command_aliases=()
@@ -485,8 +472,7 @@ _restic_cat()
     noun_aliases=()
 }
 
-_restic_check()
-{
+_restic_check() {
     last_command="restic_check"
 
     command_aliases=()
@@ -550,8 +536,7 @@ _restic_check()
     noun_aliases=()
 }
 
-_restic_copy()
-{
+_restic_copy() {
     last_command="restic_copy"
 
     command_aliases=()
@@ -628,8 +613,7 @@ _restic_copy()
     noun_aliases=()
 }
 
-_restic_diff()
-{
+_restic_diff() {
     last_command="restic_diff"
 
     command_aliases=()
@@ -686,8 +670,7 @@ _restic_diff()
     noun_aliases=()
 }
 
-_restic_dump()
-{
+_restic_dump() {
     last_command="restic_dump"
 
     command_aliases=()
@@ -756,8 +739,7 @@ _restic_dump()
     noun_aliases=()
 }
 
-_restic_find()
-{
+_restic_find() {
     last_command="restic_find"
 
     command_aliases=()
@@ -848,8 +830,7 @@ _restic_find()
     noun_aliases=()
 }
 
-_restic_forget()
-{
+_restic_forget() {
     last_command="restic_forget"
 
     command_aliases=()
@@ -963,8 +944,7 @@ _restic_forget()
     noun_aliases=()
 }
 
-_restic_generate()
-{
+_restic_generate() {
     last_command="restic_generate"
 
     command_aliases=()
@@ -1028,8 +1008,7 @@ _restic_generate()
     noun_aliases=()
 }
 
-_restic_init()
-{
+_restic_init() {
     last_command="restic_init"
 
     command_aliases=()
@@ -1098,8 +1077,7 @@ _restic_init()
     noun_aliases=()
 }
 
-_restic_key()
-{
+_restic_key() {
     last_command="restic_key"
 
     command_aliases=()
@@ -1163,8 +1141,7 @@ _restic_key()
     noun_aliases=()
 }
 
-_restic_list()
-{
+_restic_list() {
     last_command="restic_list"
 
     command_aliases=()
@@ -1219,8 +1196,7 @@ _restic_list()
     noun_aliases=()
 }
 
-_restic_ls()
-{
+_restic_ls() {
     last_command="restic_ls"
 
     command_aliases=()
@@ -1290,8 +1266,7 @@ _restic_ls()
     noun_aliases=()
 }
 
-_restic_migrate()
-{
+_restic_migrate() {
     last_command="restic_migrate"
 
     command_aliases=()
@@ -1349,8 +1324,7 @@ _restic_migrate()
     noun_aliases=()
 }
 
-_restic_mount()
-{
+_restic_mount() {
     last_command="restic_mount"
 
     command_aliases=()
@@ -1424,8 +1398,7 @@ _restic_mount()
     noun_aliases=()
 }
 
-_restic_prune()
-{
+_restic_prune() {
     last_command="restic_prune"
 
     command_aliases=()
@@ -1491,8 +1464,7 @@ _restic_prune()
     noun_aliases=()
 }
 
-_restic_rebuild-index()
-{
+_restic_rebuild-index() {
     last_command="restic_rebuild-index"
 
     command_aliases=()
@@ -1549,8 +1521,7 @@ _restic_rebuild-index()
     noun_aliases=()
 }
 
-_restic_recover()
-{
+_restic_recover() {
     last_command="restic_recover"
 
     command_aliases=()
@@ -1605,8 +1576,7 @@ _restic_recover()
     noun_aliases=()
 }
 
-_restic_restore()
-{
+_restic_restore() {
     last_command="restic_restore"
 
     command_aliases=()
@@ -1691,8 +1661,7 @@ _restic_restore()
     noun_aliases=()
 }
 
-_restic_self-update()
-{
+_restic_self-update() {
     last_command="restic_self-update"
 
     command_aliases=()
@@ -1750,8 +1719,7 @@ _restic_self-update()
     noun_aliases=()
 }
 
-_restic_snapshots()
-{
+_restic_snapshots() {
     last_command="restic_snapshots"
 
     command_aliases=()
@@ -1825,8 +1793,7 @@ _restic_snapshots()
     noun_aliases=()
 }
 
-_restic_stats()
-{
+_restic_stats() {
     last_command="restic_stats"
 
     command_aliases=()
@@ -1894,8 +1861,7 @@ _restic_stats()
     noun_aliases=()
 }
 
-_restic_tag()
-{
+_restic_tag() {
     last_command="restic_tag"
 
     command_aliases=()
@@ -1969,8 +1935,7 @@ _restic_tag()
     noun_aliases=()
 }
 
-_restic_unlock()
-{
+_restic_unlock() {
     last_command="restic_unlock"
 
     command_aliases=()
@@ -2027,8 +1992,7 @@ _restic_unlock()
     noun_aliases=()
 }
 
-_restic_version()
-{
+_restic_version() {
     last_command="restic_version"
 
     command_aliases=()
@@ -2083,8 +2047,7 @@ _restic_version()
     noun_aliases=()
 }
 
-_restic_root_command()
-{
+_restic_root_command() {
     last_command="restic"
 
     command_aliases=()
@@ -2165,8 +2128,7 @@ _restic_root_command()
     noun_aliases=()
 }
 
-__start_restic()
-{
+__start_restic() {
     local cur prev words cword
     declare -A flaghash 2>/dev/null || :
     declare -A aliashash 2>/dev/null || :

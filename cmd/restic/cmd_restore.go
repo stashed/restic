@@ -8,7 +8,6 @@ import (
 	"github.com/restic/restic/internal/filter"
 	"github.com/restic/restic/internal/restic"
 	"github.com/restic/restic/internal/restorer"
-
 	"github.com/spf13/cobra"
 )
 

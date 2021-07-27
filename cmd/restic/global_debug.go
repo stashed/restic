@@ -8,10 +8,9 @@ import (
 	_ "net/http/pprof"
 	"os"
 
+	"github.com/pkg/profile"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/repository"
-
-	"github.com/pkg/profile"
 )
 
 var (

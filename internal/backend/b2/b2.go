@@ -6,13 +6,12 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/cenkalti/backoff/v4"
+	"github.com/kurin/blazer/b2"
 	"github.com/restic/restic/internal/backend"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/restic"
-
-	"github.com/cenkalti/backoff/v4"
-	"github.com/kurin/blazer/b2"
 )
 
 // b2Backend is a backend which stores its data on Backblaze B2.

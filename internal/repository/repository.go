@@ -9,6 +9,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/minio/sha256-simd"
 	"github.com/restic/chunker"
 	"github.com/restic/restic/internal/cache"
 	"github.com/restic/restic/internal/crypto"
@@ -19,8 +20,6 @@ import (
 	"github.com/restic/restic/internal/pack"
 	"github.com/restic/restic/internal/restic"
 	"github.com/restic/restic/internal/ui/progress"
-
-	"github.com/minio/sha256-simd"
 	"golang.org/x/sync/errgroup"
 )
 

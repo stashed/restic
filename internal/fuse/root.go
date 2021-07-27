@@ -6,10 +6,9 @@ import (
 	"os"
 	"time"
 
+	"bazil.org/fuse/fs"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/restic"
-
-	"bazil.org/fuse/fs"
 )
 
 // Config holds settings for the fuse mount.

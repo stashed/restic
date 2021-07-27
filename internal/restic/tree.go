@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/restic/restic/internal/errors"
-
 	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/errors"
 )
 
 // Tree is an ordered list of nodes.

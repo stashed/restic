@@ -9,13 +9,12 @@ import (
 	"path"
 	"strings"
 
+	"github.com/Azure/azure-sdk-for-go/storage"
+	"github.com/cenkalti/backoff/v4"
 	"github.com/restic/restic/internal/backend"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/restic"
-
-	"github.com/Azure/azure-sdk-for-go/storage"
-	"github.com/cenkalti/backoff/v4"
 )
 
 // Backend stores data on an azure endpoint.
