@@ -75,7 +75,7 @@ build: $(BUILD_DIRS)
 	    --env HTTPS_PROXY=$(HTTPS_PROXY)                        \
 	    --env GO111MODULE=on                                    \
 	    $(BUILD_IMAGE)                                          \
-	    go run /src/helpers/build-release-binaries/main.go --version ${TAG} --source="/src" --output="/go/bin/"
+	    go run /src/helpers/build-release-binaries/main.go --version $(TAG:v%=%) --source="/src" --output="/go/bin/" #ref: https://stackoverflow.com/a/19571504
 
 restic: $(BUILD_DIRS)
 	@echo "Building restic binary"
