@@ -28,7 +28,7 @@ jobs:
             os: ubuntu-latest
             test_cloud_backends: true
             test_fuse: true
-            check_changelog: true
+            check_changelog: false
 
           - job_name: Linux
             go: 1.15.x
@@ -152,7 +152,7 @@ jobs:
             restic/backend/azure.TestBackendAzure"
         run: |
           # write test credentials into .env file
-          echo $RESTIC_TEST_CREDENTIALS >> $(pwd)/.env
+          echo ${{ secrets.RESTIC_TEST_CREDENTIALS }} >> $(pwd)/.env
           # export the env variables from env
           source $(pwd)/.env
           # prepare credentials for Google Cloud Storage tests in a temp file
