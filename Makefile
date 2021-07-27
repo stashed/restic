@@ -61,7 +61,7 @@ fmt: $(BUILD_DIRS)
 
 # build release binaries
 .PHONY: build
-build:
+build: $(BUILD_DIRS)
 	@echo "Building release binaries"
 	@docker run                                                 \
 	    -i                                                      \
@@ -77,7 +77,7 @@ build:
 	    $(BUILD_IMAGE)                                          \
 	    go run /src/helpers/build-release-binaries/main.go --version ${TAG} --source="/src" --output="/go/bin/"
 
-restic:
+restic: $(BUILD_DIRS)
 	@echo "Building restic binary"
 	@docker run                                                 \
 	    -i                                                      \
