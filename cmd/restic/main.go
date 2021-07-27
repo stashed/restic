@@ -9,12 +9,10 @@ import (
 	"runtime"
 
 	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/options"
 	"github.com/restic/restic/internal/restic"
-
 	"github.com/spf13/cobra"
-
-	"github.com/restic/restic/internal/errors"
 )
 
 // cmdRoot is the base command when no other command has been specified.

@@ -7,12 +7,11 @@ import (
 	"io/ioutil"
 	"sync"
 
+	"github.com/cenkalti/backoff/v4"
 	"github.com/restic/restic/internal/backend"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/restic"
-
-	"github.com/cenkalti/backoff/v4"
 )
 
 type memMap map[restic.Handle][]byte

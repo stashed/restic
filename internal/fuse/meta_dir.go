@@ -6,10 +6,9 @@ import (
 	"context"
 	"os"
 
-	"github.com/restic/restic/internal/debug"
-
 	"bazil.org/fuse"
 	"bazil.org/fuse/fs"
+	"github.com/restic/restic/internal/debug"
 )
 
 // ensure that *DirSnapshots implements these interfaces

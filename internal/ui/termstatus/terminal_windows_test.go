@@ -4,9 +4,8 @@ import (
 	"syscall"
 	"testing"
 
-	"golang.org/x/sys/windows"
-
 	rtest "github.com/restic/restic/internal/test"
+	"golang.org/x/sys/windows"
 )
 
 func TestIsMinTTY(t *testing.T) {

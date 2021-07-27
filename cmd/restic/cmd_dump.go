@@ -11,7 +11,6 @@ import (
 	"github.com/restic/restic/internal/dump"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/restic"
-
 	"github.com/spf13/cobra"
 )
 

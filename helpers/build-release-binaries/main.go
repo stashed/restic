@@ -97,7 +97,7 @@ func build(sourceDir, outputDir, goos, goarch string) (filename string) {
 
 	c := exec.Command("go", "build",
 		"-o", outputFile,
-		"-ldflags", "-s -w",
+		"-ldflags", "-s -w", "-mod=vendor",
 		"-tags", "selfupdate",
 		"./cmd/restic",
 	)

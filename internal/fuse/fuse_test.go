@@ -10,12 +10,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/restic/restic/internal/repository"
-	"github.com/restic/restic/internal/restic"
-
 	"bazil.org/fuse"
 	"bazil.org/fuse/fs"
-
+	"github.com/restic/restic/internal/repository"
+	"github.com/restic/restic/internal/restic"
 	rtest "github.com/restic/restic/internal/test"
 )
 

@@ -4,9 +4,8 @@ import (
 	"crypto/rand"
 	"encoding/binary"
 
-	"github.com/restic/restic/internal/restic"
-
 	"github.com/dchest/siphash"
+	"github.com/restic/restic/internal/restic"
 )
 
 // An indexMap is a chained hash table that maps blob IDs to indexEntries.

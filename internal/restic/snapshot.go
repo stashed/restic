@@ -8,9 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"golang.org/x/sync/errgroup"
-
 	"github.com/restic/restic/internal/debug"
+	"golang.org/x/sync/errgroup"
 )
 
 // Snapshot is the state of a resource at one point in time.

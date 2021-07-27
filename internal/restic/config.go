@@ -4,11 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/restic/restic/internal/errors"
-
-	"github.com/restic/restic/internal/debug"
-
 	"github.com/restic/chunker"
+	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/errors"
 )
 
 // Config contains the configuration for a repository.

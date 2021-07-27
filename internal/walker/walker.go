@@ -6,7 +6,6 @@ import (
 	"sort"
 
 	"github.com/pkg/errors"
-
 	"github.com/restic/restic/internal/restic"
 )
 

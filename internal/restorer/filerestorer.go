@@ -9,12 +9,11 @@ import (
 	"sort"
 	"sync"
 
-	"golang.org/x/sync/errgroup"
-
 	"github.com/restic/restic/internal/crypto"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/restic"
+	"golang.org/x/sync/errgroup"
 )
 
 // TODO if a blob is corrupt, there may be good blob copies in other packs

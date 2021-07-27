@@ -10,7 +10,6 @@ import (
 
 	"bazil.org/fuse"
 	"bazil.org/fuse/fs"
-
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/restic"
 )

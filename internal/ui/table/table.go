@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"io"
 	"strings"
-
 	"text/template"
 )
 

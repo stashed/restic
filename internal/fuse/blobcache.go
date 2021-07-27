@@ -3,10 +3,9 @@ package fuse
 import (
 	"sync"
 
+	"github.com/hashicorp/golang-lru/simplelru"
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/restic"
-
-	"github.com/hashicorp/golang-lru/simplelru"
 )
 
 // Crude estimate of the overhead per blob: a SHA-256, a linked list node

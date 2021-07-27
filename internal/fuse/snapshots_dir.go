@@ -8,11 +8,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/restic/restic/internal/debug"
-	"github.com/restic/restic/internal/restic"
-
 	"bazil.org/fuse"
 	"bazil.org/fuse/fs"
+	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/restic"
 )
 
 // SnapshotsDir is a fuse directory which contains snapshots named by timestamp.

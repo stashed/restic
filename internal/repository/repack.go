@@ -11,7 +11,6 @@ import (
 	"github.com/restic/restic/internal/pack"
 	"github.com/restic/restic/internal/restic"
 	"github.com/restic/restic/internal/ui/progress"
-
 	"golang.org/x/sync/errgroup"
 )
 

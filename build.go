@@ -453,6 +453,7 @@ func main() {
 	buildArgs = append(buildArgs,
 		"-tags", strings.Join(buildTags, " "),
 		"-ldflags", ldflags,
+		"-mod=vendor",
 		"-o", output, buildTarget,
 	)
 

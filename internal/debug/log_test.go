@@ -1,10 +1,10 @@
 package debug_test
 
 import (
+	"testing"
+
 	"github.com/restic/restic/internal/debug"
 	"github.com/restic/restic/internal/restic"
-
-	"testing"
 )
 
 func BenchmarkLogStatic(b *testing.B) {

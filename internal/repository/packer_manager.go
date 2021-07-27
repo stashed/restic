@@ -5,16 +5,14 @@ import (
 	"os"
 	"sync"
 
-	"github.com/restic/restic/internal/errors"
-	"github.com/restic/restic/internal/hashing"
-	"github.com/restic/restic/internal/restic"
-
+	"github.com/minio/sha256-simd"
 	"github.com/restic/restic/internal/crypto"
 	"github.com/restic/restic/internal/debug"
+	"github.com/restic/restic/internal/errors"
 	"github.com/restic/restic/internal/fs"
+	"github.com/restic/restic/internal/hashing"
 	"github.com/restic/restic/internal/pack"
-
-	"github.com/minio/sha256-simd"
+	"github.com/restic/restic/internal/restic"
 )
 
 // Saver implements saving data in a backend.

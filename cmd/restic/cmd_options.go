@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/restic/restic/internal/options"
-
 	"github.com/spf13/cobra"
 )
 

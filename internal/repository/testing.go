@@ -5,13 +5,12 @@ import (
 	"os"
 	"testing"
 
+	"github.com/restic/chunker"
 	"github.com/restic/restic/internal/backend/local"
 	"github.com/restic/restic/internal/backend/mem"
 	"github.com/restic/restic/internal/crypto"
 	"github.com/restic/restic/internal/restic"
 	"github.com/restic/restic/internal/test"
-
-	"github.com/restic/chunker"
 )
 
 // testKDFParams are the parameters for the KDF to be used during testing.

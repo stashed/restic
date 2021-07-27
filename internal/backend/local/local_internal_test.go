@@ -7,10 +7,9 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/cenkalti/backoff/v4"
 	"github.com/restic/restic/internal/restic"
 	rtest "github.com/restic/restic/internal/test"
-
-	"github.com/cenkalti/backoff/v4"
 )
 
 func TestNoSpacePermanent(t *testing.T) {
