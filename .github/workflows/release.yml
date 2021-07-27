@@ -55,4 +55,4 @@ jobs:
         with:
           fail_on_unmatched_files: true
           body:  ${{steps.changelog-builder.outputs.changelog}}
-          files: $(pwd)/.go/bin/*
+          files: $(pwd)/.go/bin/restic*
