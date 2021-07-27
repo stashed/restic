@@ -140,25 +140,6 @@ jobs:
 
       - name: Test cloud backends
         env:
-          RESTIC_TEST_S3_KEY: ${{ secrets.RESTIC_TEST_S3_KEY }}
-          RESTIC_TEST_S3_SECRET: ${{ secrets.RESTIC_TEST_S3_SECRET }}
-          RESTIC_TEST_S3_REPOSITORY: ${{ secrets.RESTIC_TEST_S3_REPOSITORY }}
-          RESTIC_TEST_AZURE_ACCOUNT_NAME: ${{ secrets.RESTIC_TEST_AZURE_ACCOUNT_NAME }}
-          RESTIC_TEST_AZURE_ACCOUNT_KEY: ${{ secrets.RESTIC_TEST_AZURE_ACCOUNT_KEY }}
-          RESTIC_TEST_AZURE_REPOSITORY: ${{ secrets.RESTIC_TEST_AZURE_REPOSITORY }}
-          RESTIC_TEST_B2_ACCOUNT_ID: ${{ secrets.RESTIC_TEST_B2_ACCOUNT_ID }}
-          RESTIC_TEST_B2_ACCOUNT_KEY: ${{ secrets.RESTIC_TEST_B2_ACCOUNT_KEY }}
-          RESTIC_TEST_B2_REPOSITORY: ${{ secrets.RESTIC_TEST_B2_REPOSITORY }}
-          RESTIC_TEST_GS_REPOSITORY: ${{ secrets.RESTIC_TEST_GS_REPOSITORY }}
-          RESTIC_TEST_GS_PROJECT_ID: ${{ secrets.RESTIC_TEST_GS_PROJECT_ID }}
-          GOOGLE_PROJECT_ID: ${{ secrets.RESTIC_TEST_GS_PROJECT_ID }}
-          RESTIC_TEST_GS_APPLICATION_CREDENTIALS_B64: ${{ secrets.RESTIC_TEST_GS_APPLICATION_CREDENTIALS_B64 }}
-          RESTIC_TEST_OS_AUTH_URL: ${{ secrets.RESTIC_TEST_OS_AUTH_URL }}
-          RESTIC_TEST_OS_TENANT_NAME: ${{ secrets.RESTIC_TEST_OS_TENANT_NAME }}
-          RESTIC_TEST_OS_USERNAME: ${{ secrets.RESTIC_TEST_OS_USERNAME }}
-          RESTIC_TEST_OS_PASSWORD: ${{ secrets.RESTIC_TEST_OS_PASSWORD }}
-          RESTIC_TEST_OS_REGION_NAME: ${{ secrets.RESTIC_TEST_OS_REGION_NAME }}
-          RESTIC_TEST_SWIFT: ${{ secrets.RESTIC_TEST_SWIFT }}
           # fail if any of the following tests cannot be run
           RESTIC_TEST_DISALLOW_SKIP: "restic/backend/rest.TestBackendREST,\
             restic/backend/sftp.TestBackendSFTP,\
@@ -170,6 +151,10 @@ jobs:
             restic/backend/gs.TestBackendGS,\
             restic/backend/azure.TestBackendAzure"
         run: |
+          # write test credentials into .env file
+          echo $RESTIC_TEST_CREDENTIALS >> $(pwd)/.env
+          # export the env variables from env
+          source $(pwd)/.env
           # prepare credentials for Google Cloud Storage tests in a temp file
           export GOOGLE_APPLICATION_CREDENTIALS=$(mktemp --tmpdir restic-gcs-auth-XXXXXXX)
           echo $RESTIC_TEST_GS_APPLICATION_CREDENTIALS_B64 | base64 -d > $GOOGLE_APPLICATION_CREDENTIALS
