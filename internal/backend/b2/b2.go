@@ -316,7 +316,8 @@ func (be *b2Backend) Delete(ctx context.Context) error {
 		restic.KeyFile,
 		restic.LockFile,
 		restic.SnapshotFile,
-		restic.IndexFile}
+		restic.IndexFile,
+	}
 
 	for _, t := range alltypes {
 		err := be.removeKeys(ctx, t)

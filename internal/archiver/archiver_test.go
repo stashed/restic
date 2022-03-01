@@ -122,7 +122,7 @@ func saveFile(t testing.TB, repo restic.Repository, filename string, filesystem 
 }
 
 func TestArchiverSaveFile(t *testing.T) {
-	var tests = []TestFile{
+	tests := []TestFile{
 		{Content: ""},
 		{Content: "foo"},
 		{Content: string(restictest.Random(23, 12*1024*1024+1287898))},
@@ -156,7 +156,7 @@ func TestArchiverSaveFile(t *testing.T) {
 }
 
 func TestArchiverSaveFileReaderFS(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		Data string
 	}{
 		{Data: "foo"},
@@ -175,7 +175,7 @@ func TestArchiverSaveFileReaderFS(t *testing.T) {
 			filename := "xx"
 			readerFs := &fs.Reader{
 				ModTime:    ts,
-				Mode:       0123,
+				Mode:       0o123,
 				Name:       filename,
 				ReadCloser: ioutil.NopCloser(strings.NewReader(test.Data)),
 			}
@@ -200,7 +200,7 @@ func TestArchiverSaveFileReaderFS(t *testing.T) {
 }
 
 func TestArchiverSave(t *testing.T) {
-	var tests = []TestFile{
+	tests := []TestFile{
 		{Content: ""},
 		{Content: "foo"},
 		{Content: string(restictest.Random(23, 12*1024*1024+1287898))},
@@ -266,7 +266,7 @@ func TestArchiverSave(t *testing.T) {
 }
 
 func TestArchiverSaveReaderFS(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		Data string
 	}{
 		{Data: "foo"},
@@ -285,7 +285,7 @@ func TestArchiverSaveReaderFS(t *testing.T) {
 			filename := "xx"
 			readerFs := &fs.Reader{
 				ModTime:    ts,
-				Mode:       0123,
+				Mode:       0o123,
 				Name:       filename,
 				ReadCloser: ioutil.NopCloser(strings.NewReader(test.Data)),
 			}
@@ -437,7 +437,7 @@ func (repo *blobCountingRepo) SaveTree(ctx context.Context, t *restic.Tree) (res
 }
 
 func appendToFile(t testing.TB, filename string, data []byte) {
-	f, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	f, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -508,12 +508,12 @@ func save(t testing.TB, filename string, data []byte) {
 func chmodTwice(t testing.TB, name string) {
 	// POSIX says that ctime is updated "even if the file status does not
 	// change", but let's make sure it does change, just in case.
-	err := os.Chmod(name, 0700)
+	err := os.Chmod(name, 0o700)
 	restictest.OK(t, err)
 
 	sleep()
 
-	err = os.Chmod(name, 0600)
+	err = os.Chmod(name, 0o600)
 	restictest.OK(t, err)
 }
 
@@ -527,7 +527,7 @@ func lstat(t testing.TB, name string) os.FileInfo {
 }
 
 func setTimestamp(t testing.TB, filename string, atime, mtime time.Time) {
-	var utimes = [...]syscall.Timespec{
+	utimes := [...]syscall.Timespec{
 		syscall.NsecToTimespec(atime.UnixNano()),
 		syscall.NsecToTimespec(mtime.UnixNano()),
 	}
@@ -573,9 +573,9 @@ func sleep() {
 }
 
 func TestFileChanged(t *testing.T) {
-	var defaultContent = []byte("foobar")
+	defaultContent := []byte("foobar")
 
-	var tests = []struct {
+	tests := []struct {
 		Name           string
 		SkipForWindows bool
 		Content        []byte
@@ -737,7 +737,7 @@ func TestFilChangedSpecialCases(t *testing.T) {
 func TestArchiverSaveDir(t *testing.T) {
 	const targetNodeName = "targetdir"
 
-	var tests = []struct {
+	tests := []struct {
 		src    TestDir
 		chdir  string
 		target string
@@ -1004,7 +1004,7 @@ func TestArchiverSaveTree(t *testing.T) {
 	}
 
 	// The toplevel directory is not counted in the ItemStats
-	var tests = []struct {
+	tests := []struct {
 		src     TestDir
 		prepare func(t testing.TB)
 		targets []string
@@ -1149,7 +1149,7 @@ func TestArchiverSaveTree(t *testing.T) {
 }
 
 func TestArchiverSnapshot(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name    string
 		src     TestDir
 		want    TestDir
@@ -1367,7 +1367,6 @@ func TestArchiverSnapshot(t *testing.T) {
 			chdir:   "subdir",
 			targets: []string{".", "../foo"},
 			want: TestDir{
-
 				"foo": TestFile{Content: "foo in subdir"},
 				"subsubdir": TestDir{
 					"foo": TestFile{Content: "foo in subsubdir"},
@@ -1432,7 +1431,7 @@ func TestArchiverSnapshot(t *testing.T) {
 }
 
 func TestArchiverSnapshotSelect(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name  string
 		src   TestDir
 		want  TestDir
@@ -1624,7 +1623,7 @@ func (f MockFile) Read(p []byte) (int, error) {
 }
 
 func TestArchiverParent(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		src  TestDir
 		read map[string]int // tracks number of times a file must have been read
 	}{
@@ -1736,14 +1735,14 @@ func TestArchiverErrorReporting(t *testing.T) {
 				t.Skip("Skipping this test for windows")
 			}
 
-			err := os.Chmod(filepath.FromSlash(filename), 0004)
+			err := os.Chmod(filepath.FromSlash(filename), 0o004)
 			if err != nil {
 				t.Fatal(err)
 			}
 		}
 	}
 
-	var tests = []struct {
+	tests := []struct {
 		name      string
 		src       TestDir
 		want      TestDir
@@ -1902,7 +1901,6 @@ func TestArchiverContextCanceled(t *testing.T) {
 	arch := New(repo, fs.Track{FS: fs.Local{}}, Options{})
 
 	_, snapshotID, err := arch.Snapshot(ctx, []string{"."}, SnapshotOptions{Time: time.Now()})
-
 	if err != nil {
 		t.Logf("found expected error (%v)", err)
 		return
@@ -1957,9 +1955,9 @@ func (f *failSaveRepo) SaveBlob(ctx context.Context, t restic.BlobType, buf []by
 }
 
 func TestArchiverAbortEarlyOnError(t *testing.T) {
-	var testErr = errors.New("test error")
+	testErr := errors.New("test error")
 
-	var tests = []struct {
+	tests := []struct {
 		src       TestDir
 		wantOpen  map[string]uint
 		failAfter uint // error after so many blobs have been saved to the repo
@@ -2133,7 +2131,7 @@ func (f fileStat) Stat() (os.FileInfo, error) {
 // used by wrapFileInfo, use untyped const in order to avoid having a version
 // of wrapFileInfo for each OS
 const (
-	mockFileInfoMode = 0400
+	mockFileInfoMode = 0o400
 	mockFileInfoUID  = 51234
 	mockFileInfoGID  = 51235
 )
@@ -2185,7 +2183,7 @@ func TestMetadataChanged(t *testing.T) {
 	fs.OverrideLstat["testfile"] = wrapFileInfo(t, fi)
 
 	// set the override values in the 'want' node which
-	want.Mode = 0400
+	want.Mode = 0o400
 	// ignore UID and GID on Windows
 	if runtime.GOOS != "windows" {
 		want.UID = 51234

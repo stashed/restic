@@ -440,7 +440,7 @@ func TestDownloadAndHash(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var tests = []struct {
+	tests := []struct {
 		be   repository.Loader
 		want []byte
 	}{
@@ -492,7 +492,7 @@ func (er errorReader) Read(p []byte) (n int, err error) {
 }
 
 func TestDownloadAndHashErrors(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		be  repository.Loader
 		err string
 	}{

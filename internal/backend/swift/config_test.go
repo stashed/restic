@@ -16,14 +16,16 @@ var configTests = []struct {
 	},
 	{
 		"swift:cnt2:/prefix",
-		Config{Container: "cnt2",
+		Config{
+			Container:   "cnt2",
 			Prefix:      "prefix",
 			Connections: 5,
 		},
 	},
 	{
 		"swift:cnt3:/prefix/longer",
-		Config{Container: "cnt3",
+		Config{
+			Container:   "cnt3",
 			Prefix:      "prefix/longer",
 			Connections: 5,
 		},

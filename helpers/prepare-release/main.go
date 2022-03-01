@@ -79,7 +79,7 @@ func replace(filename, from, to string) {
 	}
 
 	buf = reg.ReplaceAll(buf, []byte(to))
-	err = ioutil.WriteFile(filename, buf, 0644)
+	err = ioutil.WriteFile(filename, buf, 0o644)
 	if err != nil {
 		die("error writing file %v: %v", filename, err)
 	}
@@ -100,7 +100,7 @@ func rmdir(dir string) {
 }
 
 func mkdir(dir string) {
-	err := os.Mkdir(dir, 0755)
+	err := os.Mkdir(dir, 0o755)
 	if err != nil {
 		die("mkdir %v: %v", dir, err)
 	}
@@ -307,7 +307,7 @@ var versionPattern = `var version = ".*"`
 const versionCodeFile = "cmd/restic/global.go"
 
 func updateVersion() {
-	err := ioutil.WriteFile("VERSION", []byte(opts.Version+"\n"), 0644)
+	err := ioutil.WriteFile("VERSION", []byte(opts.Version+"\n"), 0o644)
 	if err != nil {
 		die("unable to write version to file: %v", err)
 	}

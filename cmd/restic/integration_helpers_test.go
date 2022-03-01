@@ -46,7 +46,6 @@ func walkDir(dir string) <-chan *dirEntry {
 
 			return nil
 		})
-
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Walk() error: %v\n", err)
 		}
@@ -184,10 +183,10 @@ func withTestEnvironment(t testing.TB) (env *testEnvironment, cleanup func()) {
 		mountpoint: filepath.Join(tempdir, "mount"),
 	}
 
-	rtest.OK(t, os.MkdirAll(env.mountpoint, 0700))
-	rtest.OK(t, os.MkdirAll(env.testdata, 0700))
-	rtest.OK(t, os.MkdirAll(env.cache, 0700))
-	rtest.OK(t, os.MkdirAll(env.repo, 0700))
+	rtest.OK(t, os.MkdirAll(env.mountpoint, 0o700))
+	rtest.OK(t, os.MkdirAll(env.testdata, 0o700))
+	rtest.OK(t, os.MkdirAll(env.cache, 0o700))
+	rtest.OK(t, os.MkdirAll(env.repo, 0o700))
 
 	env.gopts = GlobalOptions{
 		Repo:     env.repo,

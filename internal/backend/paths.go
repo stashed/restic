@@ -23,4 +23,4 @@ var Paths = struct {
 
 // Modes holds the default modes for directories and files for file-based
 // backends.
-var Modes = struct{ Dir, File os.FileMode }{0700, 0600}
+var Modes = struct{ Dir, File os.FileMode }{0o700, 0o600}

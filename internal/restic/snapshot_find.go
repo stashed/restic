@@ -74,7 +74,6 @@ func FindLatestSnapshot(ctx context.Context, repo Repository, targets []string, 
 // FindSnapshot takes a string and tries to find a snapshot whose ID matches
 // the string as closely as possible.
 func FindSnapshot(ctx context.Context, repo Repository, s string) (ID, error) {
-
 	// find snapshot id with prefix
 	name, err := Find(ctx, repo.Backend(), SnapshotFile, s)
 	if err != nil {
@@ -102,7 +101,6 @@ func FindFilteredSnapshots(ctx context.Context, repo Repository, hosts []string,
 		results = append(results, sn)
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}

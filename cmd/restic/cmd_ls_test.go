@@ -58,7 +58,7 @@ func TestLsNodeJSON(t *testing.T) {
 			Node: restic.Node{
 				Name:       "link",
 				Type:       "symlink",
-				Mode:       os.ModeSymlink | 0777,
+				Mode:       os.ModeSymlink | 0o777,
 				LinkTarget: "not printed",
 			},
 			expect: `{"name":"link","type":"symlink","path":"/foo/link","uid":0,"gid":0,"mode":134218239,"mtime":"0001-01-01T00:00:00Z","atime":"0001-01-01T00:00:00Z","ctime":"0001-01-01T00:00:00Z","struct_type":"node"}`,
@@ -69,7 +69,7 @@ func TestLsNodeJSON(t *testing.T) {
 			Node: restic.Node{
 				Name:       "directory",
 				Type:       "dir",
-				Mode:       os.ModeDir | 0755,
+				Mode:       os.ModeDir | 0o755,
 				ModTime:    time.Date(2020, 1, 2, 3, 4, 5, 0, time.UTC),
 				AccessTime: time.Date(2021, 2, 3, 4, 5, 6, 7, time.UTC),
 				ChangeTime: time.Date(2022, 3, 4, 5, 6, 7, 8, time.UTC),

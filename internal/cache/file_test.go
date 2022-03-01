@@ -86,7 +86,7 @@ func TestFiles(t *testing.T) {
 	c, cleanup := TestNewCache(t)
 	defer cleanup()
 
-	var tests = []restic.FileType{
+	tests := []restic.FileType{
 		restic.SnapshotFile,
 		restic.PackFile,
 		restic.IndexFile,
@@ -209,7 +209,7 @@ func TestFileLoad(t *testing.T) {
 		t.Fatalf("Save() returned error: %v", err)
 	}
 
-	var tests = []struct {
+	tests := []struct {
 		offset int64
 		length int
 	}{

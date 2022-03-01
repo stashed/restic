@@ -8,16 +8,16 @@ import (
 	rtest "github.com/restic/restic/internal/test"
 )
 
-//TestFillSecondaryGlobalOpts tests valid and invalid data on fillSecondaryGlobalOpts-function
+// TestFillSecondaryGlobalOpts tests valid and invalid data on fillSecondaryGlobalOpts-function
 func TestFillSecondaryGlobalOpts(t *testing.T) {
-	//secondaryRepoTestCase defines a struct for test cases
+	// secondaryRepoTestCase defines a struct for test cases
 	type secondaryRepoTestCase struct {
 		Opts     secondaryRepoOptions
 		DstGOpts GlobalOptions
 	}
 
-	//validSecondaryRepoTestCases is a list with test cases that must pass
-	var validSecondaryRepoTestCases = []secondaryRepoTestCase{
+	// validSecondaryRepoTestCases is a list with test cases that must pass
+	validSecondaryRepoTestCases := []secondaryRepoTestCase{
 		{
 			// Test if Repo and Password are parsed correctly.
 			Opts: secondaryRepoOptions{
@@ -55,8 +55,8 @@ func TestFillSecondaryGlobalOpts(t *testing.T) {
 		},
 	}
 
-	//invalidSecondaryRepoTestCases is a list with test cases that must fail
-	var invalidSecondaryRepoTestCases = []secondaryRepoTestCase{
+	// invalidSecondaryRepoTestCases is a list with test cases that must fail
+	invalidSecondaryRepoTestCases := []secondaryRepoTestCase{
 		{
 			// Test must fail on no repo given.
 			Opts: secondaryRepoOptions{},
@@ -98,23 +98,23 @@ func TestFillSecondaryGlobalOpts(t *testing.T) {
 		},
 	}
 
-	//gOpts defines the Global options used in the secondary repository tests
-	var gOpts = GlobalOptions{
+	// gOpts defines the Global options used in the secondary repository tests
+	gOpts := GlobalOptions{
 		Repo:           "backupSrc",
 		RepositoryFile: "backupSrc",
 		password:       "secretSrc",
 		PasswordFile:   "passwordFileSrc",
 	}
 
-	//Create temp dir to create password file.
+	// Create temp dir to create password file.
 	dir, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
 	cleanup = rtest.Chdir(t, dir)
 	defer cleanup()
 
-	//Create temporary password file
-	err := ioutil.WriteFile(filepath.Join(dir, "passwordFileDst"), []byte("secretDst"), 0666)
+	// Create temporary password file
+	err := ioutil.WriteFile(filepath.Join(dir, "passwordFileDst"), []byte("secretDst"), 0o666)
 	rtest.OK(t, err)
 
 	// Test all valid cases

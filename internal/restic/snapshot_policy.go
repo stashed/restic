@@ -166,7 +166,7 @@ func ApplyPolicy(list Snapshots, p ExpirePolicy) (keep, remove Snapshots, reason
 		return list, nil, nil
 	}
 
-	var buckets = [6]struct {
+	buckets := [6]struct {
 		Count  int
 		bucker func(d time.Time, nr int) int
 		Last   int

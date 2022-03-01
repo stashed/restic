@@ -1,3 +1,4 @@
+//go:build darwin || freebsd || linux
 // +build darwin freebsd linux
 
 package fuse
@@ -69,7 +70,7 @@ func newDirFromSnapshot(ctx context.Context, root *Root, inode uint64, snapshot 
 			AccessTime: snapshot.Time,
 			ModTime:    snapshot.Time,
 			ChangeTime: snapshot.Time,
-			Mode:       os.ModeDir | 0555,
+			Mode:       os.ModeDir | 0o555,
 			Subtree:    snapshot.Tree,
 		},
 		inode: inode,

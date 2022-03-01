@@ -1,3 +1,4 @@
+//go:build !windows
 // +build !windows
 
 package fs
@@ -7,8 +8,7 @@ import (
 )
 
 // MountPoint is a dummy for non-windows platforms to let client code compile.
-type MountPoint struct {
-}
+type MountPoint struct{}
 
 // IsSnapshotted is true if this mount point was snapshotted successfully.
 func (p *MountPoint) IsSnapshotted() bool {
@@ -33,7 +33,8 @@ func HasSufficientPrivilegesForVSS() error {
 // NewVssSnapshot creates a new vss snapshot. If creating the snapshots doesn't
 // finish within the timeout an error is returned.
 func NewVssSnapshot(
-	volume string, timeoutInSeconds uint, msgError ErrorHandler) (VssSnapshot, error) {
+	volume string, timeoutInSeconds uint, msgError ErrorHandler,
+) (VssSnapshot, error) {
 	return VssSnapshot{}, errors.New("VSS snapshots are only supported on windows")
 }
 

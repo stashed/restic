@@ -35,7 +35,6 @@ func init() {
 	cmdRoot.AddCommand(cmdRebuildIndex)
 	f := cmdRebuildIndex.Flags()
 	f.BoolVar(&rebuildIndexOptions.ReadAllPacks, "read-all-packs", false, "read all pack files to generate new index from scratch")
-
 }
 
 func runRebuildIndex(opts RebuildIndexOptions, gopts GlobalOptions) error {

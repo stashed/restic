@@ -397,7 +397,7 @@ func TestBackupSelfHealing(t *testing.T) {
 	testRunInit(t, env.gopts)
 
 	p := filepath.Join(env.testdata, "test/test")
-	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0755))
+	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0o755))
 	rtest.OK(t, appendRandomData(p, 5))
 
 	opts := BackupOptions{}
@@ -426,7 +426,7 @@ func TestBackupTreeLoadError(t *testing.T) {
 
 	testRunInit(t, env.gopts)
 	p := filepath.Join(env.testdata, "test/test")
-	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0755))
+	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0o755))
 	rtest.OK(t, appendRandomData(p, 5))
 
 	opts := BackupOptions{}
@@ -519,7 +519,7 @@ func TestBackupExclude(t *testing.T) {
 
 	for _, filename := range backupExcludeFilenames {
 		fp := filepath.Join(datadir, filename)
-		rtest.OK(t, os.MkdirAll(filepath.Dir(fp), 0755))
+		rtest.OK(t, os.MkdirAll(filepath.Dir(fp), 0o755))
 
 		f, err := os.Create(fp)
 		rtest.OK(t, err)
@@ -566,9 +566,9 @@ func TestBackupErrors(t *testing.T) {
 
 	// Assume failure
 	inaccessibleFile := filepath.Join(env.testdata, "0", "0", "9", "0")
-	rtest.OK(t, os.Chmod(inaccessibleFile, 0000))
+	rtest.OK(t, os.Chmod(inaccessibleFile, 0o000))
 	defer func() {
-		rtest.OK(t, os.Chmod(inaccessibleFile, 0644))
+		rtest.OK(t, os.Chmod(inaccessibleFile, 0o644))
 	}()
 	opts := BackupOptions{}
 	gopts := env.gopts
@@ -588,7 +588,7 @@ const (
 )
 
 func appendRandomData(filename string, bytes uint) error {
-	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0666)
+	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0o666)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return err
@@ -1064,7 +1064,7 @@ func TestRestoreFilter(t *testing.T) {
 
 	for _, testFile := range testfiles {
 		p := filepath.Join(env.testdata, testFile.name)
-		rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0755))
+		rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0o755))
 		rtest.OK(t, appendRandomData(p, testFile.size))
 	}
 
@@ -1104,7 +1104,7 @@ func TestRestore(t *testing.T) {
 
 	for i := 0; i < 10; i++ {
 		p := filepath.Join(env.testdata, fmt.Sprintf("foo/bar/testfile%v", i))
-		rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0755))
+		rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0o755))
 		rtest.OK(t, appendRandomData(p, uint(mrand.Intn(2<<21))))
 	}
 
@@ -1128,7 +1128,7 @@ func TestRestoreLatest(t *testing.T) {
 	testRunInit(t, env.gopts)
 
 	p := filepath.Join(env.testdata, "testfile.c")
-	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0755))
+	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0o755))
 	rtest.OK(t, appendRandomData(p, 100))
 
 	opts := BackupOptions{}
@@ -1158,14 +1158,14 @@ func TestRestoreLatest(t *testing.T) {
 	// Setup test files in different directories backed up in different snapshots
 	p1 := filepath.Join(curdir, filepath.FromSlash("p1/testfile.c"))
 
-	rtest.OK(t, os.MkdirAll(filepath.Dir(p1), 0755))
+	rtest.OK(t, os.MkdirAll(filepath.Dir(p1), 0o755))
 	rtest.OK(t, appendRandomData(p1, 102))
 	testRunBackup(t, "", []string{"p1"}, opts, env.gopts)
 	testRunCheck(t, env.gopts)
 
 	p2 := filepath.Join(curdir, filepath.FromSlash("p2/testfile.c"))
 
-	rtest.OK(t, os.MkdirAll(filepath.Dir(p2), 0755))
+	rtest.OK(t, os.MkdirAll(filepath.Dir(p2), 0o755))
 	rtest.OK(t, appendRandomData(p2, 103))
 	testRunBackup(t, "", []string{"p2"}, opts, env.gopts)
 	testRunCheck(t, env.gopts)
@@ -1219,7 +1219,7 @@ func TestRestoreWithPermissionFailure(t *testing.T) {
 }
 
 func setZeroModTime(filename string) error {
-	var utimes = []syscall.Timespec{
+	utimes := []syscall.Timespec{
 		syscall.NsecToTimespec(0),
 		syscall.NsecToTimespec(0),
 	}
@@ -1234,7 +1234,7 @@ func TestRestoreNoMetadataOnIgnoredIntermediateDirs(t *testing.T) {
 	testRunInit(t, env.gopts)
 
 	p := filepath.Join(env.testdata, "subdir1", "subdir2", "subdir3", "file.ext")
-	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0755))
+	rtest.OK(t, os.MkdirAll(filepath.Dir(p), 0o755))
 	rtest.OK(t, appendRandomData(p, 200))
 	rtest.OK(t, setZeroModTime(filepath.Join(env.testdata, "subdir1", "subdir2")))
 
@@ -1409,7 +1409,7 @@ func TestCheckRestoreNoLock(t *testing.T) {
 		if e != nil {
 			return e
 		}
-		return os.Chmod(p, fi.Mode() & ^(os.FileMode(0222)))
+		return os.Chmod(p, fi.Mode() & ^(os.FileMode(0o222)))
 	})
 	rtest.OK(t, err)
 
@@ -1846,17 +1846,17 @@ func TestDiff(t *testing.T) {
 	subtestdir := filepath.Join(testdir, "subtestdir")
 	testfile := filepath.Join(testdir, "testfile")
 
-	rtest.OK(t, os.Mkdir(testdir, 0755))
-	rtest.OK(t, os.Mkdir(subtestdir, 0755))
+	rtest.OK(t, os.Mkdir(testdir, 0o755))
+	rtest.OK(t, os.Mkdir(subtestdir, 0o755))
 	rtest.OK(t, appendRandomData(testfile, 256*1024))
 
 	moddir := filepath.Join(datadir, "moddir")
 	submoddir := filepath.Join(moddir, "submoddir")
 	subsubmoddir := filepath.Join(submoddir, "subsubmoddir")
 	modfile := filepath.Join(moddir, "modfile")
-	rtest.OK(t, os.Mkdir(moddir, 0755))
-	rtest.OK(t, os.Mkdir(submoddir, 0755))
-	rtest.OK(t, os.Mkdir(subsubmoddir, 0755))
+	rtest.OK(t, os.Mkdir(moddir, 0o755))
+	rtest.OK(t, os.Mkdir(submoddir, 0o755))
+	rtest.OK(t, os.Mkdir(subsubmoddir, 0o755))
 	rtest.OK(t, copyFile(modfile, testfile))
 	rtest.OK(t, appendRandomData(modfile+"1", 256*1024))
 
@@ -1869,7 +1869,7 @@ func TestDiff(t *testing.T) {
 	rtest.OK(t, os.Rename(submoddir, submoddir+"2"))
 	rtest.OK(t, appendRandomData(modfile+"1", 256*1024))
 	rtest.OK(t, appendRandomData(modfile+"2", 256*1024))
-	rtest.OK(t, os.Mkdir(modfile+"4", 0755))
+	rtest.OK(t, os.Mkdir(modfile+"4", 0o755))
 
 	testRunBackup(t, "", []string{datadir}, opts, env.gopts)
 	_, secondSnapshotID := lastSnapshot(snapshots, loadSnapshotMap(t, env.gopts))
@@ -1906,8 +1906,8 @@ type onlyLoadWithWriteToBackend struct {
 }
 
 func (be *onlyLoadWithWriteToBackend) Load(ctx context.Context, h restic.Handle,
-	length int, offset int64, fn func(rd io.Reader) error) error {
-
+	length int, offset int64, fn func(rd io.Reader) error,
+) error {
 	return be.Backend.Load(ctx, h, length, offset, func(rd io.Reader) error {
 		return fn(&writeToOnly{rd: rd})
 	})

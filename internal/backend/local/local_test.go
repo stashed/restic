@@ -106,7 +106,7 @@ func openclose(t testing.TB, dir string) {
 }
 
 func mkdir(t testing.TB, dir string) {
-	err := os.Mkdir(dir, 0700)
+	err := os.Mkdir(dir, 0o700)
 	if err != nil {
 		t.Fatal(err)
 	}

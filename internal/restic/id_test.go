@@ -60,7 +60,7 @@ func TestID(t *testing.T) {
 }
 
 func TestIDUnmarshal(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		s     string
 		valid bool
 	}{

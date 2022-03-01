@@ -67,7 +67,7 @@ func Random(seed, count int) []byte {
 
 	for i := 0; i < len(p); i += 8 {
 		val := rnd.Int63()
-		var data = []byte{
+		data := []byte{
 			byte((val >> 0) & 0xff),
 			byte((val >> 8) & 0xff),
 			byte((val >> 16) & 0xff),
@@ -165,11 +165,11 @@ func ResetReadOnly(t testing.TB, dir string) {
 		}
 
 		if fi.IsDir() {
-			return os.Chmod(path, 0777)
+			return os.Chmod(path, 0o777)
 		}
 
 		if isFile(fi) {
-			return os.Chmod(path, 0666)
+			return os.Chmod(path, 0o666)
 		}
 
 		return nil

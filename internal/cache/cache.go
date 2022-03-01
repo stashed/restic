@@ -23,8 +23,10 @@ type Cache struct {
 	PerformReadahead func(restic.Handle) bool
 }
 
-const dirMode = 0700
-const fileMode = 0644
+const (
+	dirMode  = 0o700
+	fileMode = 0o644
+)
 
 func readVersion(dir string) (v uint, err error) {
 	buf, err := ioutil.ReadFile(filepath.Join(dir, "version"))
@@ -96,7 +98,7 @@ func New(id string, basedir string) (c *Cache, err error) {
 		}
 	}
 
-	err = fs.MkdirAll(basedir, 0700)
+	err = fs.MkdirAll(basedir, 0o700)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

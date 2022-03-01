@@ -15,8 +15,8 @@ const loadIndexParallelism = 5
 // It is guaranteed that the function is not run concurrently. If the callback
 // returns an error, this function is cancelled and also returns that error.
 func ForAllIndexes(ctx context.Context, repo restic.Repository,
-	fn func(id restic.ID, index *Index, oldFormat bool, err error) error) error {
-
+	fn func(id restic.ID, index *Index, oldFormat bool, err error) error,
+) error {
 	debug.Log("Start")
 
 	type FileInfo struct {

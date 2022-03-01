@@ -72,7 +72,7 @@ func saveDir(t testing.TB, repo restic.Repository, nodes map[string]Node, inode 
 			}
 			mode := node.Mode
 			if mode == 0 {
-				mode = 0644
+				mode = 0o644
 			}
 			err := tree.Insert(&restic.Node{
 				Type:    "file",
@@ -92,7 +92,7 @@ func saveDir(t testing.TB, repo restic.Repository, nodes map[string]Node, inode 
 
 			mode := node.Mode
 			if mode == 0 {
-				mode = 0755
+				mode = 0o755
 			}
 
 			err := tree.Insert(&restic.Node{
@@ -144,7 +144,7 @@ func saveSnapshot(t testing.TB, repo restic.Repository, snapshot Snapshot) (*res
 }
 
 func TestRestorer(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		Snapshot
 		Files      map[string]string
 		ErrorsMust map[string]map[string]struct{}
@@ -194,7 +194,7 @@ func TestRestorer(t *testing.T) {
 			Snapshot: Snapshot{
 				Nodes: map[string]Node{
 					"dir": Dir{
-						Mode: 0444,
+						Mode: 0o444,
 					},
 					"file": File{Data: "top-level file"},
 				},
@@ -207,7 +207,7 @@ func TestRestorer(t *testing.T) {
 			Snapshot: Snapshot{
 				Nodes: map[string]Node{
 					"dir": Dir{
-						Mode: 0555,
+						Mode: 0o555,
 						Nodes: map[string]Node{
 							"file": File{Data: "file in dir"},
 						},
@@ -410,7 +410,7 @@ func TestRestorer(t *testing.T) {
 }
 
 func TestRestorerRelative(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		Snapshot
 		Files map[string]string
 	}{
@@ -529,7 +529,7 @@ func checkVisitOrder(list []TreeVisit) TraverseTreeCheck {
 }
 
 func TestRestorerTraverseTree(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		Snapshot
 		Select  func(item string, dstpath string, node *restic.Node) (selectForRestore bool, childMayBeSelected bool)
 		Visitor TraverseTreeCheck
@@ -699,9 +699,9 @@ func TestRestorerTraverseTree(t *testing.T) {
 func normalizeFileMode(mode os.FileMode) os.FileMode {
 	if runtime.GOOS == "windows" {
 		if mode.IsDir() {
-			return 0555 | os.ModeDir
+			return 0o555 | os.ModeDir
 		}
-		return os.FileMode(0444)
+		return os.FileMode(0o444)
 	}
 	return mode
 }
@@ -726,11 +726,11 @@ func TestRestorerConsistentTimestampsAndPermissions(t *testing.T) {
 	_, id := saveSnapshot(t, repo, Snapshot{
 		Nodes: map[string]Node{
 			"dir": Dir{
-				Mode:    normalizeFileMode(0750 | os.ModeDir),
+				Mode:    normalizeFileMode(0o750 | os.ModeDir),
 				ModTime: timeForTest,
 				Nodes: map[string]Node{
 					"file1": File{
-						Mode:    normalizeFileMode(os.FileMode(0700)),
+						Mode:    normalizeFileMode(os.FileMode(0o700)),
 						ModTime: timeForTest,
 						Data:    "content: file\n",
 					},
@@ -738,11 +738,11 @@ func TestRestorerConsistentTimestampsAndPermissions(t *testing.T) {
 						Data: "content: file\n",
 					},
 					"subdir": Dir{
-						Mode:    normalizeFileMode(0700 | os.ModeDir),
+						Mode:    normalizeFileMode(0o700 | os.ModeDir),
 						ModTime: timeForTest,
 						Nodes: map[string]Node{
 							"file2": File{
-								Mode:    normalizeFileMode(os.FileMode(0666)),
+								Mode:    normalizeFileMode(os.FileMode(0o666)),
 								ModTime: timeForTest,
 								Links:   2,
 								Inode:   1,
@@ -783,15 +783,15 @@ func TestRestorerConsistentTimestampsAndPermissions(t *testing.T) {
 	err = res.RestoreTo(ctx, tempdir)
 	rtest.OK(t, err)
 
-	var testPatterns = []struct {
+	testPatterns := []struct {
 		path    string
 		modtime time.Time
 		mode    os.FileMode
 	}{
-		{"dir", timeForTest, normalizeFileMode(0750 | os.ModeDir)},
-		{filepath.Join("dir", "file1"), timeForTest, normalizeFileMode(os.FileMode(0700))},
-		{filepath.Join("dir", "subdir"), timeForTest, normalizeFileMode(0700 | os.ModeDir)},
-		{filepath.Join("dir", "subdir", "file2"), timeForTest, normalizeFileMode(os.FileMode(0666))},
+		{"dir", timeForTest, normalizeFileMode(0o750 | os.ModeDir)},
+		{filepath.Join("dir", "file1"), timeForTest, normalizeFileMode(os.FileMode(0o700))},
+		{filepath.Join("dir", "subdir"), timeForTest, normalizeFileMode(0o700 | os.ModeDir)},
+		{filepath.Join("dir", "subdir", "file2"), timeForTest, normalizeFileMode(os.FileMode(0o666))},
 	}
 
 	for _, test := range testPatterns {

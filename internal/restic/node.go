@@ -230,7 +230,7 @@ func (node Node) restoreExtendedAttributes(path string) error {
 }
 
 func (node Node) RestoreTimestamps(path string) error {
-	var utimes = [...]syscall.Timespec{
+	utimes := [...]syscall.Timespec{
 		syscall.NsecToTimespec(node.AccessTime.UnixNano()),
 		syscall.NsecToTimespec(node.ModTime.UnixNano()),
 	}
@@ -256,7 +256,7 @@ func (node Node) createDirAt(path string) error {
 }
 
 func (node Node) createFileAt(ctx context.Context, path string, repo Repository) error {
-	f, err := fs.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	f, err := fs.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o600)
 	if err != nil {
 		return errors.Wrap(err, "OpenFile")
 	}
@@ -306,15 +306,15 @@ func (node Node) createSymlinkAt(path string) error {
 }
 
 func (node *Node) createDevAt(path string) error {
-	return mknod(path, syscall.S_IFBLK|0600, node.Device)
+	return mknod(path, syscall.S_IFBLK|0o600, node.Device)
 }
 
 func (node *Node) createCharDevAt(path string) error {
-	return mknod(path, syscall.S_IFCHR|0600, node.Device)
+	return mknod(path, syscall.S_IFCHR|0o600, node.Device)
 }
 
 func (node *Node) createFifoAt(path string) error {
-	return mkfifo(path, 0600)
+	return mkfifo(path, 0o600)
 }
 
 // FixTime returns a time.Time which can safely be used to marshal as JSON. If
@@ -323,7 +323,7 @@ func (node *Node) createFifoAt(path string) error {
 // the year nothing is changed.
 func FixTime(t time.Time) time.Time {
 	switch {
-	case t.Year() < 0000:
+	case t.Year() < 0o000:
 		return t.AddDate(-t.Year(), 0, 0)
 	case t.Year() > 9999:
 		return t.AddDate(-(t.Year() - 9999), 0, 0)

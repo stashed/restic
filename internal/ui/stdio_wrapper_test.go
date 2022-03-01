@@ -8,7 +8,7 @@ import (
 )
 
 func TestStdioWrapper(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		inputs [][]byte
 		output string
 	}{

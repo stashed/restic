@@ -7,7 +7,7 @@ import (
 )
 
 func TestTable(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		create func(t testing.TB) *Table
 		output string
 	}{

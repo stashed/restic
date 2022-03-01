@@ -243,7 +243,6 @@ func runLs(opts LsOptions, gopts GlobalOptions, args []string) error {
 			}
 			return false, nil
 		})
-
 		if err != nil {
 			return err
 		}

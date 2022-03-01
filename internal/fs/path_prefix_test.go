@@ -17,7 +17,7 @@ func fromSlashAbs(p string) string {
 }
 
 func TestHasPathPrefix(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		base, p string
 		result  bool
 	}{

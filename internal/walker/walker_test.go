@@ -224,7 +224,7 @@ func checkIgnore(skipFor map[string]struct{}, ignoreFor map[string]bool, wantPat
 }
 
 func TestWalker(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		tree   TestTree
 		checks []checkFunc
 	}{

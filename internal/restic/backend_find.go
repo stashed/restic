@@ -41,7 +41,6 @@ func Find(ctx context.Context, be Lister, t FileType, prefix string) (string, er
 
 		return nil
 	})
-
 	if err != nil {
 		return "", err
 	}
@@ -68,7 +67,6 @@ func PrefixLength(ctx context.Context, be Lister, t FileType) (int, error) {
 		list = append(list, fi.Name)
 		return nil
 	})
-
 	if err != nil {
 		return 0, err
 	}

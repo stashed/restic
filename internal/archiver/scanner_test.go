@@ -13,7 +13,7 @@ import (
 )
 
 func TestScanner(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name  string
 		src   TestDir
 		want  map[string]ScanStats
@@ -127,7 +127,7 @@ func TestScanner(t *testing.T) {
 }
 
 func TestScannerError(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name    string
 		unix    bool
 		src     TestDir
@@ -168,7 +168,7 @@ func TestScannerError(t *testing.T) {
 			},
 			result: ScanStats{Files: 3, Dirs: 1, Bytes: 28},
 			prepare: func(t testing.TB) {
-				err := os.Chmod(filepath.Join("work", "subdir"), 0000)
+				err := os.Chmod(filepath.Join("work", "subdir"), 0o000)
 				if err != nil {
 					t.Fatal(err)
 				}

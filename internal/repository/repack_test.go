@@ -115,7 +115,6 @@ func listPacks(t *testing.T, repo restic.Repository) restic.IDSet {
 		list.Insert(id)
 		return nil
 	})
-
 	if err != nil {
 		t.Fatal(err)
 	}

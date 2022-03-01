@@ -174,8 +174,8 @@ func similarSnapshots(sna *restic.Snapshot, snb *restic.Snapshot) bool {
 }
 
 func copyTree(ctx context.Context, srcRepo restic.Repository, dstRepo restic.Repository,
-	visitedTrees restic.IDSet, rootTreeID restic.ID) error {
-
+	visitedTrees restic.IDSet, rootTreeID restic.ID,
+) error {
 	wg, ctx := errgroup.WithContext(ctx)
 
 	treeStream := restic.StreamTrees(ctx, wg, srcRepo, restic.IDs{rootTreeID}, func(treeID restic.ID) bool {

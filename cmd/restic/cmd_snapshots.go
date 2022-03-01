@@ -130,7 +130,7 @@ type filterLastSnapshotsKey struct {
 // newFilterLastSnapshotsKey initializes a filterLastSnapshotsKey from a Snapshot
 func newFilterLastSnapshotsKey(sn *restic.Snapshot) filterLastSnapshotsKey {
 	// Shallow slice copy
-	var paths = make([]string, len(sn.Paths))
+	paths := make([]string, len(sn.Paths))
 	copy(paths, sn.Paths)
 	sort.Strings(paths)
 	return filterLastSnapshotsKey{sn.Hostname, strings.Join(paths, "|")}

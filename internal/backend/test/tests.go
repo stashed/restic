@@ -74,7 +74,7 @@ func (s *Suite) TestConfig(t *testing.T) {
 	b := s.open(t)
 	defer s.close(t, b)
 
-	var testString = "Config"
+	testString := "Config"
 
 	// create config and read it back
 	_, err := backend.LoadAll(context.TODO(), nil, b, restic.Handle{Type: restic.ConfigFile})
@@ -260,7 +260,7 @@ func (s *Suite) TestList(t *testing.T) {
 
 	t.Logf("wrote %v files", len(list1))
 
-	var tests = []struct {
+	tests := []struct {
 		maxItems int
 	}{
 		{11}, {23}, {numTestFiles}, {numTestFiles + 10}, {numTestFiles + 1123},
@@ -287,7 +287,6 @@ func (s *Suite) TestList(t *testing.T) {
 				list2[id] = fi.Size
 				return nil
 			})
-
 			if err != nil {
 				t.Fatalf("List returned error %v", err)
 			}
@@ -711,7 +710,6 @@ func delayedList(t testing.TB, b restic.Backend, tpe restic.FileType, max int, m
 			list.Insert(id)
 			return nil
 		})
-
 		if err != nil {
 			t.Fatal(err)
 		}

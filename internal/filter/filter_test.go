@@ -351,7 +351,7 @@ func extractTestLines(t testing.TB) (lines []string) {
 func TestFilterPatternsFile(t *testing.T) {
 	lines := extractTestLines(t)
 
-	var testPatterns = []struct {
+	testPatterns := []struct {
 		pattern string
 		hits    uint
 	}{

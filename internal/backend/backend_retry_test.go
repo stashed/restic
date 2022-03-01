@@ -84,7 +84,7 @@ func TestBackendListRetry(t *testing.T) {
 }
 
 func TestBackendListRetryErrorFn(t *testing.T) {
-	var names = []string{"id1", "id2", "foo", "bar"}
+	names := []string{"id1", "id2", "foo", "bar"}
 
 	be := &mock.Backend{
 		ListFn: func(ctx context.Context, tpe restic.FileType, fn func(restic.FileInfo) error) error {
@@ -102,7 +102,7 @@ func TestBackendListRetryErrorFn(t *testing.T) {
 
 	retryBackend := NewRetryBackend(be, 10, nil)
 
-	var ErrTest = errors.New("test error")
+	ErrTest := errors.New("test error")
 
 	var listed []string
 	run := 0
@@ -131,9 +131,9 @@ func TestBackendListRetryErrorFn(t *testing.T) {
 }
 
 func TestBackendListRetryErrorBackend(t *testing.T) {
-	var names = []string{"id1", "id2", "foo", "bar"}
+	names := []string{"id1", "id2", "foo", "bar"}
 
-	var ErrBackendTest = errors.New("test error")
+	ErrBackendTest := errors.New("test error")
 
 	retries := 0
 	be := &mock.Backend{
@@ -194,6 +194,7 @@ func (r failingReader) Read(p []byte) (n int, err error) {
 	}
 	return i, nil
 }
+
 func (r failingReader) Close() error {
 	return nil
 }
@@ -206,6 +207,7 @@ type closingReader struct {
 func (r closingReader) Read(p []byte) (n int, err error) {
 	return r.rd.Read(p)
 }
+
 func (r closingReader) Close() error {
 	return nil
 }

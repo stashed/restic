@@ -73,7 +73,6 @@ func Open(cfg Config, rt http.RoundTripper) (*Backend, error) {
 // it does not exist yet.
 func Create(cfg Config, rt http.RoundTripper) (*Backend, error) {
 	be, err := open(cfg, rt)
-
 	if err != nil {
 		return nil, errors.Wrap(err, "open")
 	}
@@ -151,7 +150,6 @@ func (be *Backend) Save(ctx context.Context, h restic.Handle, rd restic.RewindRe
 	} else {
 		// otherwise use the more complicated method
 		err = be.saveLarge(ctx, objName, rd)
-
 	}
 
 	be.sem.ReleaseToken()
@@ -405,7 +403,8 @@ func (be *Backend) Delete(ctx context.Context) error {
 		restic.KeyFile,
 		restic.LockFile,
 		restic.SnapshotFile,
-		restic.IndexFile}
+		restic.IndexFile,
+	}
 
 	for _, t := range alltypes {
 		err := be.removeKeys(ctx, t)

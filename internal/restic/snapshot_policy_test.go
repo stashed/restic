@@ -85,13 +85,13 @@ func saveGoldenFile(t testing.TB, filename string, keep restic.Snapshots, reason
 		t.Fatalf("error marshaling result: %v", err)
 	}
 
-	if err = ioutil.WriteFile(filename, buf, 0644); err != nil {
+	if err = ioutil.WriteFile(filename, buf, 0o644); err != nil {
 		t.Fatalf("unable to update golden file: %v", err)
 	}
 }
 
 func TestApplyPolicy(t *testing.T) {
-	var testExpireSnapshots = restic.Snapshots{
+	testExpireSnapshots := restic.Snapshots{
 		{Time: parseTimeUTC("2014-09-01 10:20:30")},
 		{Time: parseTimeUTC("2014-09-02 10:20:30")},
 		{Time: parseTimeUTC("2014-09-05 10:20:30")},
@@ -197,7 +197,7 @@ func TestApplyPolicy(t *testing.T) {
 		{Time: parseTimeUTC("2016-01-18 12:02:03")},
 	}
 
-	var tests = []restic.ExpirePolicy{
+	tests := []restic.ExpirePolicy{
 		{},
 		{Last: 10},
 		{Last: 15},
@@ -232,7 +232,6 @@ func TestApplyPolicy(t *testing.T) {
 
 	for i, p := range tests {
 		t.Run("", func(t *testing.T) {
-
 			keep, remove, reasons := restic.ApplyPolicy(testExpireSnapshots, p)
 
 			if len(keep)+len(remove) != len(testExpireSnapshots) {

@@ -28,7 +28,8 @@ var parseTests = []struct {
 }{
 	{
 		"local:/srv/repo",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "/srv/repo",
 			},
@@ -36,7 +37,8 @@ var parseTests = []struct {
 	},
 	{
 		"local:dir1/dir2",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "dir1/dir2",
 			},
@@ -44,7 +46,8 @@ var parseTests = []struct {
 	},
 	{
 		"local:dir1/dir2",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "dir1/dir2",
 			},
@@ -52,7 +55,8 @@ var parseTests = []struct {
 	},
 	{
 		"dir1/dir2",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "dir1/dir2",
 			},
@@ -60,7 +64,8 @@ var parseTests = []struct {
 	},
 	{
 		"/dir1/dir2",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "/dir1/dir2",
 			},
@@ -68,7 +73,8 @@ var parseTests = []struct {
 	},
 	{
 		"local:../dir1/dir2",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "../dir1/dir2",
 			},
@@ -76,7 +82,8 @@ var parseTests = []struct {
 	},
 	{
 		"/dir1/dir2",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "/dir1/dir2",
 			},
@@ -84,7 +91,8 @@ var parseTests = []struct {
 	},
 	{
 		"/dir1:foobar/dir2",
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: "/dir1:foobar/dir2",
 			},
@@ -92,7 +100,8 @@ var parseTests = []struct {
 	},
 	{
 		`\dir1\foobar\dir2`,
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: `\dir1\foobar\dir2`,
 			},
@@ -100,7 +109,8 @@ var parseTests = []struct {
 	},
 	{
 		`c:\dir1\foobar\dir2`,
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: `c:\dir1\foobar\dir2`,
 			},
@@ -108,7 +118,8 @@ var parseTests = []struct {
 	},
 	{
 		`C:\Users\appveyor\AppData\Local\Temp\1\restic-test-879453535\repo`,
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: `C:\Users\appveyor\AppData\Local\Temp\1\restic-test-879453535\repo`,
 			},
@@ -116,7 +127,8 @@ var parseTests = []struct {
 	},
 	{
 		`c:/dir1/foobar/dir2`,
-		Location{Scheme: "local",
+		Location{
+			Scheme: "local",
 			Config: local.Config{
 				Path: `c:/dir1/foobar/dir2`,
 			},
@@ -124,7 +136,8 @@ var parseTests = []struct {
 	},
 	{
 		"sftp:user@host:/srv/repo",
-		Location{Scheme: "sftp",
+		Location{
+			Scheme: "sftp",
 			Config: sftp.Config{
 				User: "user",
 				Host: "host",
@@ -134,7 +147,8 @@ var parseTests = []struct {
 	},
 	{
 		"sftp:host:/srv/repo",
-		Location{Scheme: "sftp",
+		Location{
+			Scheme: "sftp",
 			Config: sftp.Config{
 				User: "",
 				Host: "host",
@@ -144,7 +158,8 @@ var parseTests = []struct {
 	},
 	{
 		"sftp://user@host/srv/repo",
-		Location{Scheme: "sftp",
+		Location{
+			Scheme: "sftp",
 			Config: sftp.Config{
 				User: "user",
 				Host: "host",
@@ -154,7 +169,8 @@ var parseTests = []struct {
 	},
 	{
 		"sftp://user@host//srv/repo",
-		Location{Scheme: "sftp",
+		Location{
+			Scheme: "sftp",
 			Config: sftp.Config{
 				User: "user",
 				Host: "host",
@@ -165,7 +181,8 @@ var parseTests = []struct {
 
 	{
 		"s3://eu-central-1/bucketname",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "eu-central-1",
 				Bucket:      "bucketname",
@@ -176,7 +193,8 @@ var parseTests = []struct {
 	},
 	{
 		"s3://hostname.foo/bucketname",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "hostname.foo",
 				Bucket:      "bucketname",
@@ -187,7 +205,8 @@ var parseTests = []struct {
 	},
 	{
 		"s3://hostname.foo/bucketname/prefix/directory",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "hostname.foo",
 				Bucket:      "bucketname",
@@ -198,7 +217,8 @@ var parseTests = []struct {
 	},
 	{
 		"s3:eu-central-1/repo",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "eu-central-1",
 				Bucket:      "repo",
@@ -209,7 +229,8 @@ var parseTests = []struct {
 	},
 	{
 		"s3:eu-central-1/repo/prefix/directory",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "eu-central-1",
 				Bucket:      "repo",
@@ -220,7 +241,8 @@ var parseTests = []struct {
 	},
 	{
 		"s3:https://hostname.foo/repo",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "hostname.foo",
 				Bucket:      "repo",
@@ -231,7 +253,8 @@ var parseTests = []struct {
 	},
 	{
 		"s3:https://hostname.foo/repo/prefix/directory",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "hostname.foo",
 				Bucket:      "repo",
@@ -242,7 +265,8 @@ var parseTests = []struct {
 	},
 	{
 		"s3:http://hostname.foo/repo",
-		Location{Scheme: "s3",
+		Location{
+			Scheme: "s3",
 			Config: s3.Config{
 				Endpoint:    "hostname.foo",
 				Bucket:      "repo",
@@ -254,7 +278,8 @@ var parseTests = []struct {
 	},
 	{
 		"swift:container17:/",
-		Location{Scheme: "swift",
+		Location{
+			Scheme: "swift",
 			Config: swift.Config{
 				Container:   "container17",
 				Prefix:      "",
@@ -264,7 +289,8 @@ var parseTests = []struct {
 	},
 	{
 		"swift:container17:/prefix97",
-		Location{Scheme: "swift",
+		Location{
+			Scheme: "swift",
 			Config: swift.Config{
 				Container:   "container17",
 				Prefix:      "prefix97",
@@ -274,7 +300,8 @@ var parseTests = []struct {
 	},
 	{
 		"rest:http://hostname.foo:1234/",
-		Location{Scheme: "rest",
+		Location{
+			Scheme: "rest",
 			Config: rest.Config{
 				URL:         parseURL("http://hostname.foo:1234/"),
 				Connections: 5,
@@ -282,7 +309,8 @@ var parseTests = []struct {
 		},
 	},
 	{
-		"b2:bucketname:/prefix", Location{Scheme: "b2",
+		"b2:bucketname:/prefix", Location{
+			Scheme: "b2",
 			Config: b2.Config{
 				Bucket:      "bucketname",
 				Prefix:      "prefix",
@@ -291,7 +319,8 @@ var parseTests = []struct {
 		},
 	},
 	{
-		"b2:bucketname", Location{Scheme: "b2",
+		"b2:bucketname", Location{
+			Scheme: "b2",
 			Config: b2.Config{
 				Bucket:      "bucketname",
 				Prefix:      "",
@@ -323,7 +352,7 @@ func TestParse(t *testing.T) {
 }
 
 func TestInvalidScheme(t *testing.T) {
-	var invalidSchemes = []string{
+	invalidSchemes := []string{
 		"foobar:xxx",
 		"foobar:/dir/dir2",
 	}

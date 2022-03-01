@@ -53,7 +53,7 @@ func TestTreeSaver(t *testing.T) {
 }
 
 func TestTreeSaverError(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		trees  int
 		failAt int32
 	}{

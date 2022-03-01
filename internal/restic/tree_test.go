@@ -30,7 +30,7 @@ func createTempDir(t *testing.T) string {
 		file := filepath.Join(tempdir, test.name)
 		dir := filepath.Dir(file)
 		if dir != "." {
-			rtest.OK(t, os.MkdirAll(dir, 0755))
+			rtest.OK(t, os.MkdirAll(dir, 0o755))
 		}
 
 		f, err := os.Create(file)

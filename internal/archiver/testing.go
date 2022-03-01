@@ -68,7 +68,7 @@ func TestCreateFiles(t testing.TB, target string, dir TestDir) {
 
 		switch it := item.(type) {
 		case TestFile:
-			err := ioutil.WriteFile(targetPath, []byte(it.Content), 0644)
+			err := ioutil.WriteFile(targetPath, []byte(it.Content), 0o644)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -82,7 +82,7 @@ func TestCreateFiles(t testing.TB, target string, dir TestDir) {
 				t.Fatal(err)
 			}
 		case TestDir:
-			err := fs.Mkdir(targetPath, 0755)
+			err := fs.Mkdir(targetPath, 0o755)
 			if err != nil {
 				t.Fatal(err)
 			}

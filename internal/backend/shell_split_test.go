@@ -6,7 +6,7 @@ import (
 )
 
 func TestShellSplitter(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		data string
 		args []string
 	}{
@@ -64,7 +64,7 @@ func TestShellSplitter(t *testing.T) {
 }
 
 func TestShellSplitterInvalid(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		data string
 		err  string
 	}{

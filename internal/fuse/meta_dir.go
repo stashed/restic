@@ -1,3 +1,4 @@
+//go:build darwin || freebsd || linux
 // +build darwin freebsd linux
 
 package fuse
@@ -36,7 +37,7 @@ func NewMetaDir(root *Root, inode uint64, entries map[string]fs.Node) *MetaDir {
 // Attr returns the attributes for the root node.
 func (d *MetaDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 	attr.Inode = d.inode
-	attr.Mode = os.ModeDir | 0555
+	attr.Mode = os.ModeDir | 0o555
 	attr.Uid = d.root.uid
 	attr.Gid = d.root.gid
 

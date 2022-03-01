@@ -1,3 +1,4 @@
+//go:build darwin || freebsd || linux
 // +build darwin freebsd linux
 
 package fuse
@@ -81,7 +82,6 @@ func firstSnapshotID(t testing.TB, repo restic.Repository) (first restic.ID) {
 		}
 		return nil
 	})
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -150,7 +150,7 @@ func TestFuseFile(t *testing.T) {
 	node := &restic.Node{
 		Name:    "foo",
 		Inode:   23,
-		Mode:    0742,
+		Mode:    0o742,
 		Size:    filesize,
 		Content: content,
 	}
@@ -192,7 +192,7 @@ func TestFuseDir(t *testing.T) {
 	root := &Root{repo: repo, blobCache: newBlobCache(blobCacheSize)}
 
 	node := &restic.Node{
-		Mode:       0755,
+		Mode:       0o755,
 		UID:        42,
 		GID:        43,
 		AccessTime: time.Unix(1606773731, 0),

@@ -69,7 +69,7 @@ func TestBlobSaver(t *testing.T) {
 }
 
 func TestBlobSaverError(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		blobs  int
 		failAt int
 	}{

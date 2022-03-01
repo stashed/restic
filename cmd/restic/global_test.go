@@ -43,7 +43,7 @@ func TestReadRepo(t *testing.T) {
 
 	// test --repository-file option
 	foo := filepath.Join(tempDir, "foo")
-	err = ioutil.WriteFile(foo, []byte(tempDir+"\n"), 0666)
+	err = ioutil.WriteFile(foo, []byte(tempDir+"\n"), 0o666)
 	rtest.OK(t, err)
 
 	var opts2 GlobalOptions

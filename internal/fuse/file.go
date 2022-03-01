@@ -1,3 +1,4 @@
+//go:build darwin || freebsd || linux
 // +build darwin freebsd linux
 
 package fuse
@@ -18,9 +19,12 @@ const blockSize = 512
 
 // Statically ensure that *file and *openFile implement the given interfaces
 var _ = fs.HandleReader(&openFile{})
-var _ = fs.NodeListxattrer(&file{})
-var _ = fs.NodeGetxattrer(&file{})
-var _ = fs.NodeOpener(&file{})
+
+var (
+	_ = fs.NodeListxattrer(&file{})
+	_ = fs.NodeGetxattrer(&file{})
+	_ = fs.NodeOpener(&file{})
+)
 
 type file struct {
 	root  *Root
@@ -61,7 +65,6 @@ func (f *file) Attr(ctx context.Context, a *fuse.Attr) error {
 	a.Mtime = f.node.ModTime
 
 	return nil
-
 }
 
 func (f *file) Open(ctx context.Context, req *fuse.OpenRequest, resp *fuse.OpenResponse) (fs.Handle, error) {
@@ -79,7 +82,7 @@ func (f *file) Open(ctx context.Context, req *fuse.OpenRequest, resp *fuse.OpenR
 		cumsize[i+1] = bytes
 	}
 
-	var of = openFile{file: *f}
+	of := openFile{file: *f}
 
 	if bytes != f.node.Size {
 		debug.Log("sizes do not match: node.Size %v != size %v, using real size", f.node.Size, bytes)
@@ -94,7 +97,6 @@ func (f *file) Open(ctx context.Context, req *fuse.OpenRequest, resp *fuse.OpenR
 }
 
 func (f *openFile) getBlobAt(ctx context.Context, i int) (blob []byte, err error) {
-
 	blob, ok := f.root.blobCache.get(f.node.Content[i])
 	if ok {
 		return blob, nil

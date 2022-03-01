@@ -148,10 +148,8 @@ func (p *Packer) String() string {
 	return fmt.Sprintf("<Packer %d blobs, %d bytes>", len(p.blobs), p.bytes)
 }
 
-var (
-	// we require at least one entry in the header, and one blob for a pack file
-	minFileSize = EntrySize + crypto.Extension + uint(headerLengthSize)
-)
+// we require at least one entry in the header, and one blob for a pack file
+var minFileSize = EntrySize + crypto.Extension + uint(headerLengthSize)
 
 const (
 	// size of the header-length field at the end of the file; it is a uint32

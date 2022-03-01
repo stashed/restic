@@ -79,7 +79,7 @@ var nodeTests = []restic.Node{
 		Content:    restic.IDs{},
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0604,
+		Mode:       0o604,
 		ModTime:    parseTime("2015-05-14 21:07:23.111"),
 		AccessTime: parseTime("2015-05-14 21:07:24.222"),
 		ChangeTime: parseTime("2015-05-14 21:07:25.333"),
@@ -90,7 +90,7 @@ var nodeTests = []restic.Node{
 		Content:    restic.IDs{},
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0755 | os.ModeSetuid,
+		Mode:       0o755 | os.ModeSetuid,
 		ModTime:    parseTime("2015-05-14 21:07:23.111"),
 		AccessTime: parseTime("2015-05-14 21:07:24.222"),
 		ChangeTime: parseTime("2015-05-14 21:07:25.333"),
@@ -101,7 +101,7 @@ var nodeTests = []restic.Node{
 		Content:    restic.IDs{},
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0755 | os.ModeSetgid,
+		Mode:       0o755 | os.ModeSetgid,
 		ModTime:    parseTime("2015-05-14 21:07:23.111"),
 		AccessTime: parseTime("2015-05-14 21:07:24.222"),
 		ChangeTime: parseTime("2015-05-14 21:07:25.333"),
@@ -112,7 +112,7 @@ var nodeTests = []restic.Node{
 		Content:    restic.IDs{},
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0755 | os.ModeSticky,
+		Mode:       0o755 | os.ModeSticky,
 		ModTime:    parseTime("2015-05-14 21:07:23.111"),
 		AccessTime: parseTime("2015-05-14 21:07:24.222"),
 		ChangeTime: parseTime("2015-05-14 21:07:25.333"),
@@ -123,7 +123,7 @@ var nodeTests = []restic.Node{
 		Subtree:    nil,
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0750 | os.ModeDir,
+		Mode:       0o750 | os.ModeDir,
 		ModTime:    parseTime("2015-05-14 21:07:23.111"),
 		AccessTime: parseTime("2015-05-14 21:07:24.222"),
 		ChangeTime: parseTime("2015-05-14 21:07:25.333"),
@@ -134,7 +134,7 @@ var nodeTests = []restic.Node{
 		LinkTarget: "invalid",
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0777 | os.ModeSymlink,
+		Mode:       0o777 | os.ModeSymlink,
 		ModTime:    parseTime("2015-05-14 21:07:23.111"),
 		AccessTime: parseTime("2015-05-14 21:07:24.222"),
 		ChangeTime: parseTime("2015-05-14 21:07:25.333"),
@@ -148,7 +148,7 @@ var nodeTests = []restic.Node{
 		Content:    restic.IDs{},
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0604,
+		Mode:       0o604,
 		ModTime:    parseTime("2005-05-14 21:07:03.111"),
 		AccessTime: parseTime("2005-05-14 21:07:04.222"),
 		ChangeTime: parseTime("2005-05-14 21:07:05.333"),
@@ -159,7 +159,7 @@ var nodeTests = []restic.Node{
 		Subtree:    nil,
 		UID:        uint32(os.Getuid()),
 		GID:        uint32(os.Getgid()),
-		Mode:       0750 | os.ModeDir,
+		Mode:       0o750 | os.ModeDir,
 		ModTime:    parseTime("2005-05-14 21:07:03.111"),
 		AccessTime: parseTime("2005-05-14 21:07:04.222"),
 		ChangeTime: parseTime("2005-05-14 21:07:05.333"),
@@ -262,7 +262,7 @@ func TestFixTime(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var tests = []struct {
+	tests := []struct {
 		src, want time.Time
 	}{
 		{

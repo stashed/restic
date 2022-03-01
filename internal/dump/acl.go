@@ -38,9 +38,11 @@ type aclElement struct {
 func (a aclSID) getType() int {
 	return int(a >> 32)
 }
+
 func (a aclSID) getID() uint32 {
 	return uint32(a & 0xffffffff)
 }
+
 func (a aclSID) String() string {
 	switch a >> 32 {
 	case aclUserOwner:

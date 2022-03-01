@@ -189,7 +189,7 @@ func (res *Restorer) restoreHardlinkAt(node *restic.Node, target, path, location
 }
 
 func (res *Restorer) restoreEmptyFileAt(node *restic.Node, target, location string) error {
-	wr, err := os.OpenFile(target, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0600)
+	wr, err := os.OpenFile(target, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0o600)
 	if err != nil {
 		return err
 	}
@@ -225,14 +225,14 @@ func (res *Restorer) RestoreTo(ctx context.Context, dst string) error {
 			debug.Log("first pass, enterDir: mkdir %q, leaveDir should restore metadata", location)
 			// create dir with default permissions
 			// #leaveDir restores dir metadata after visiting all children
-			return fs.MkdirAll(target, 0700)
+			return fs.MkdirAll(target, 0o700)
 		},
 
 		visitNode: func(node *restic.Node, target, location string) error {
 			debug.Log("first pass, visitNode: mkdir %q, leaveDir on second pass should restore metadata", location)
 			// create parent dir with default permissions
 			// second pass #leaveDir restores dir metadata after visiting/restoring all children
-			err := fs.MkdirAll(filepath.Dir(target), 0700)
+			err := fs.MkdirAll(filepath.Dir(target), 0o700)
 			if err != nil {
 				return err
 			}

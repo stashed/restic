@@ -31,8 +31,8 @@ type trackedID struct {
 
 // loadTreeWorker loads trees from repo and sends them to out.
 func loadTreeWorker(ctx context.Context, repo TreeLoader,
-	in <-chan trackedID, out chan<- trackedTreeItem) {
-
+	in <-chan trackedID, out chan<- trackedTreeItem,
+) {
 	for treeID := range in {
 		tree, err := repo.LoadTree(ctx, treeID.ID)
 		debug.Log("load tree %v (%v) returned err: %v", tree, treeID, err)
@@ -47,8 +47,8 @@ func loadTreeWorker(ctx context.Context, repo TreeLoader,
 }
 
 func filterTrees(ctx context.Context, trees IDs, loaderChan chan<- trackedID,
-	in <-chan trackedTreeItem, out chan<- TreeItem, skip func(tree ID) bool, p *progress.Counter) {
-
+	in <-chan trackedTreeItem, out chan<- TreeItem, skip func(tree ID) bool, p *progress.Counter,
+) {
 	var (
 		inCh                    = in
 		outCh                   chan<- TreeItem

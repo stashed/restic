@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package fs
@@ -348,7 +349,8 @@ func (vss *IVssBackupComponents) GatherWriterMetadata() (*IVSSAsync, error) {
 // convertToVSSAsync looks up IVSSAsync interface if given result
 // is a success.
 func (vss *IVssBackupComponents) convertToVSSAsync(
-	oleIUnknown *ole.IUnknown, err error) (*IVSSAsync, error) {
+	oleIUnknown *ole.IUnknown, err error,
+) (*IVSSAsync, error) {
 	if err != nil {
 		return nil, err
 	}
@@ -502,7 +504,8 @@ func (vss *IVssBackupComponents) DeleteSnapshots(snapshotID ole.GUID) (int32, ol
 
 // GetSnapshotProperties calls the equivalent VSS api.
 func (vss *IVssBackupComponents) GetSnapshotProperties(snapshotID ole.GUID,
-	properties *VssSnapshotProperties) error {
+	properties *VssSnapshotProperties,
+) error {
 	var result uintptr = 0
 
 	if runtime.GOARCH == "386" {
@@ -729,9 +732,9 @@ func HasSufficientPrivilegesForVSS() error {
 // NewVssSnapshot creates a new vss snapshot. If creating the snapshots doesn't
 // finish within the timeout an error is returned.
 func NewVssSnapshot(
-	volume string, timeoutInSeconds uint, msgError ErrorHandler) (VssSnapshot, error) {
+	volume string, timeoutInSeconds uint, msgError ErrorHandler,
+) (VssSnapshot, error) {
 	is64Bit, err := isRunningOn64BitWindows()
-
 	if err != nil {
 		return VssSnapshot{}, newVssTextError(fmt.Sprintf(
 			"Failed to detect windows architecture: %s", err.Error()))
@@ -848,8 +851,10 @@ func NewVssSnapshot(
 			return VssSnapshot{}, err
 		}
 
-		mountPointInfo[mountPoint] = MountPoint{isSnapshotted: true,
-			snapshotSetID: mountPointSnapshotSetID}
+		mountPointInfo[mountPoint] = MountPoint{
+			isSnapshotted: true,
+			snapshotSetID: mountPointSnapshotSetID,
+		}
 	}
 
 	err = callAsyncFunctionAndWait(iVssBackupComponents.PrepareForBackup, "PrepareForBackup",
@@ -899,8 +904,10 @@ func NewVssSnapshot(
 		mountPointInfo[mountPoint] = info
 	}
 
-	return VssSnapshot{iVssBackupComponents, snapshotSetID, snapshotProperties,
-		snapshotProperties.GetSnapshotDeviceObject(), mountPointInfo, timeoutInMillis}, nil
+	return VssSnapshot{
+		iVssBackupComponents, snapshotSetID, snapshotProperties,
+		snapshotProperties.GetSnapshotDeviceObject(), mountPointInfo, timeoutInMillis,
+	}, nil
 }
 
 // Delete deletes the created snapshot.

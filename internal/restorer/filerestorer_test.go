@@ -253,7 +253,8 @@ func TestErrorRestoreFiles(t *testing.T) {
 			blobs: []TestBlob{
 				{"data1-1", "pack1-1"},
 			},
-		}}
+		},
+	}
 
 	repo := newTestRepo(content)
 
@@ -287,7 +288,8 @@ func testPartialDownloadError(t *testing.T, part int) {
 				{"data1-2", "pack1"},
 				{"data1-3", "pack1"},
 			},
-		}}
+		},
+	}
 
 	repo := newTestRepo(content)
 

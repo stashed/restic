@@ -1,3 +1,4 @@
+//go:build debug
 // +build debug
 
 package debug
@@ -48,7 +49,7 @@ func initDebugLogger() {
 
 	fmt.Fprintf(os.Stderr, "debug log file %v\n", debugfile)
 
-	f, err := fs.OpenFile(debugfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
+	f, err := fs.OpenFile(debugfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o600)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "unable to open debug log file: %v\n", err)
 		os.Exit(2)

@@ -40,7 +40,7 @@ func findHash(buf []byte, filename string) (hash []byte, err error) {
 }
 
 func extractToFile(buf []byte, filename, target string, printf func(string, ...interface{})) error {
-	var mode = os.FileMode(0755)
+	mode := os.FileMode(0o755)
 
 	// get information about the target file
 	fi, err := os.Lstat(target)

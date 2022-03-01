@@ -33,8 +33,7 @@ type Filesystem interface {
 var _ Filesystem = &LocalFilesystem{}
 
 // LocalFilesystem implements Filesystem in a local path.
-type LocalFilesystem struct {
-}
+type LocalFilesystem struct{}
 
 // ReadDir returns all entries of a directory.
 func (l *LocalFilesystem) ReadDir(ctx context.Context, dir string) ([]os.FileInfo, error) {
@@ -66,8 +65,10 @@ func (l *LocalFilesystem) IsNotExist(err error) bool {
 	return os.IsNotExist(err)
 }
 
-var backendFilenameLength = len(restic.ID{}) * 2
-var backendFilename = regexp.MustCompile(fmt.Sprintf("^[a-fA-F0-9]{%d}$", backendFilenameLength))
+var (
+	backendFilenameLength = len(restic.ID{}) * 2
+	backendFilename       = regexp.MustCompile(fmt.Sprintf("^[a-fA-F0-9]{%d}$", backendFilenameLength))
+)
 
 func hasBackendFile(ctx context.Context, fs Filesystem, dir string) (bool, error) {
 	entries, err := fs.ReadDir(ctx, dir)

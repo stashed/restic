@@ -28,7 +28,7 @@ endif
 
 IMAGE           := $(REGISTRY)/$(BIN)
 TAG             := $(VERSION)
-GO_VERSION      ?= 1.16
+GO_VERSION      ?= 1.17
 BUILD_IMAGE     ?= appscode/golang-dev:$(GO_VERSION)
 DOCKERFILE		:= $(shell pwd)/docker/Dockerfile
 

@@ -439,7 +439,6 @@ func (f *Finder) packsToBlobs(ctx context.Context, packs []string) error {
 		}
 		return nil
 	})
-
 	if err != nil {
 		return err
 	}

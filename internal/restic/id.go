@@ -25,7 +25,6 @@ type ID [idSize]byte
 // ParseID converts the given string to an ID.
 func ParseID(s string) (ID, error) {
 	b, err := hex.DecodeString(s)
-
 	if err != nil {
 		return ID{}, errors.Wrap(err, "hex.DecodeString")
 	}

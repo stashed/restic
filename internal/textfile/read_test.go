@@ -53,7 +53,7 @@ func dec(s string) []byte {
 }
 
 func TestRead(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		data []byte
 		want []byte
 	}{

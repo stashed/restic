@@ -276,7 +276,6 @@ func (be *beSwift) List(ctx context.Context, t restic.FileType, fn func(restic.F
 			}
 			return newObjects, nil
 		})
-
 	if err != nil {
 		return err
 	}
@@ -308,7 +307,8 @@ func (be *beSwift) Delete(ctx context.Context) error {
 		restic.KeyFile,
 		restic.LockFile,
 		restic.SnapshotFile,
-		restic.IndexFile}
+		restic.IndexFile,
+	}
 
 	for _, t := range alltypes {
 		err := be.removeKeys(ctx, t)

@@ -55,7 +55,7 @@ func Walk(ctx context.Context, repo restic.TreeLoader, root restic.ID, ignoreTre
 // subtree is in ignoreTrees. If err is nil and ignore is true, the subtree ID
 // will be added to ignoreTrees by walk.
 func walk(ctx context.Context, repo restic.TreeLoader, prefix string, parentTreeID restic.ID, tree *restic.Tree, ignoreTrees restic.IDSet, walkFn WalkFunc) (ignore bool, err error) {
-	var allNodesIgnored = true
+	allNodesIgnored := true
 
 	if len(tree.Nodes) == 0 {
 		allNodesIgnored = false

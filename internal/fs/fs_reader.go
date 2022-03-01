@@ -106,7 +106,7 @@ func (fs *Reader) Lstat(name string) (os.FileInfo, error) {
 		fi := fakeFileInfo{
 			name:    fs.Base(name),
 			size:    0,
-			mode:    os.ModeDir | 0755,
+			mode:    os.ModeDir | 0o755,
 			modtime: time.Now(),
 		}
 		return fi

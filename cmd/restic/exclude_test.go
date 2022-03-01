@@ -10,7 +10,7 @@ import (
 )
 
 func TestRejectByPattern(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		filename string
 		reject   bool
 	}{
@@ -37,7 +37,7 @@ func TestRejectByPattern(t *testing.T) {
 }
 
 func TestRejectByInsensitivePattern(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		filename string
 		reject   bool
 	}{
@@ -89,13 +89,13 @@ func TestIsExcludedByFile(t *testing.T) {
 			defer cleanup()
 
 			foo := filepath.Join(tempDir, "foo")
-			err := ioutil.WriteFile(foo, []byte("foo"), 0666)
+			err := ioutil.WriteFile(foo, []byte("foo"), 0o666)
 			if err != nil {
 				t.Fatalf("could not write file: %v", err)
 			}
 			if tc.tagFile != "" {
 				tagFile := filepath.Join(tempDir, tc.tagFile)
-				err = ioutil.WriteFile(tagFile, []byte(tc.content), 0666)
+				err = ioutil.WriteFile(tagFile, []byte(tc.content), 0o666)
 				if err != nil {
 					t.Fatalf("could not write tagfile: %v", err)
 				}
@@ -149,8 +149,8 @@ func TestMultipleIsExcludedByFile(t *testing.T) {
 	for _, f := range files {
 		// create directories first, then the file
 		p := filepath.Join(tempDir, filepath.FromSlash(f.path))
-		errs = append(errs, os.MkdirAll(filepath.Dir(p), 0700))
-		errs = append(errs, ioutil.WriteFile(p, []byte(f.path), 0600))
+		errs = append(errs, os.MkdirAll(filepath.Dir(p), 0o700))
+		errs = append(errs, ioutil.WriteFile(p, []byte(f.path), 0o600))
 	}
 	test.OKs(t, errs) // see if anything went wrong during the creation
 
@@ -278,8 +278,8 @@ func TestIsExcludedByFileSize(t *testing.T) {
 	for _, f := range files {
 		// create directories first, then the file
 		p := filepath.Join(tempDir, filepath.FromSlash(f.path))
-		errs = append(errs, os.MkdirAll(filepath.Dir(p), 0700))
-		file, err := os.OpenFile(p, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600)
+		errs = append(errs, os.MkdirAll(filepath.Dir(p), 0o700))
+		file, err := os.OpenFile(p, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0o600)
 		errs = append(errs, err)
 		if err == nil {
 			// create a file with given size
@@ -325,7 +325,7 @@ func TestDeviceMap(t *testing.T) {
 		filepath.FromSlash("/usr/local"): 5,
 	}
 
-	var tests = []struct {
+	tests := []struct {
 		item     string
 		deviceID uint64
 		allowed  bool

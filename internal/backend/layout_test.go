@@ -17,7 +17,7 @@ func TestDefaultLayout(t *testing.T) {
 	tempdir, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
-	var tests = []struct {
+	tests := []struct {
 		path string
 		join func(...string) string
 		restic.Handle
@@ -144,7 +144,7 @@ func TestRESTLayout(t *testing.T) {
 	path, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
-	var tests = []struct {
+	tests := []struct {
 		restic.Handle
 		filename string
 	}{
@@ -209,7 +209,7 @@ func TestRESTLayout(t *testing.T) {
 }
 
 func TestRESTLayoutURLs(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		l   Layout
 		h   restic.Handle
 		fn  string
@@ -290,7 +290,7 @@ func TestS3LegacyLayout(t *testing.T) {
 	path, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
-	var tests = []struct {
+	tests := []struct {
 		restic.Handle
 		filename string
 	}{
@@ -358,7 +358,7 @@ func TestDetectLayout(t *testing.T) {
 	path, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
-	var tests = []struct {
+	tests := []struct {
 		filename string
 		want     string
 	}{
@@ -366,7 +366,7 @@ func TestDetectLayout(t *testing.T) {
 		{"repo-layout-s3legacy.tar.gz", "*backend.S3LegacyLayout"},
 	}
 
-	var fs = &LocalFilesystem{}
+	fs := &LocalFilesystem{}
 	for _, test := range tests {
 		for _, fs := range []Filesystem{fs, nil} {
 			t.Run(fmt.Sprintf("%v/fs-%T", test.filename, fs), func(t *testing.T) {
@@ -396,7 +396,7 @@ func TestParseLayout(t *testing.T) {
 	path, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
-	var tests = []struct {
+	tests := []struct {
 		layoutName        string
 		defaultLayoutName string
 		want              string
@@ -436,7 +436,7 @@ func TestParseLayoutInvalid(t *testing.T) {
 	path, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
-	var invalidNames = []string{
+	invalidNames := []string{
 		"foo", "bar", "local",
 	}
 

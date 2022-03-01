@@ -20,7 +20,7 @@ func createTestFiles(t testing.TB, num int) (files []string, cleanup func()) {
 
 	for i := 0; i < 15; i++ {
 		filename := fmt.Sprintf("testfile-%d", i)
-		err := ioutil.WriteFile(filepath.Join(tempdir, filename), []byte(filename), 0600)
+		err := ioutil.WriteFile(filepath.Join(tempdir, filename), []byte(filename), 0o600)
 		if err != nil {
 			t.Fatal(err)
 		}

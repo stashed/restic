@@ -107,11 +107,11 @@ func runRecover(gopts GlobalOptions) error {
 
 	tree := restic.NewTree()
 	for id := range roots {
-		var subtreeID = id
+		subtreeID := id
 		node := restic.Node{
 			Type:       "dir",
 			Name:       id.Str(),
-			Mode:       0755,
+			Mode:       0o755,
 			Subtree:    &subtreeID,
 			AccessTime: time.Now(),
 			ModTime:    time.Now(),

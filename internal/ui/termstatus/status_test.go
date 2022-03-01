@@ -3,7 +3,7 @@ package termstatus
 import "testing"
 
 func TestTruncate(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		input  string
 		width  int
 		output string

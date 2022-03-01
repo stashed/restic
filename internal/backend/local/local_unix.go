@@ -1,3 +1,4 @@
+//go:build !windows
 // +build !windows
 
 package local
@@ -10,5 +11,5 @@ import (
 
 // set file to readonly
 func setFileReadonly(f string, mode os.FileMode) error {
-	return fs.Chmod(f, mode&^0222)
+	return fs.Chmod(f, mode&^0o222)
 }

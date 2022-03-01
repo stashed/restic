@@ -100,7 +100,6 @@ type saveBlobResponse struct {
 
 func (s *BlobSaver) saveBlob(ctx context.Context, t restic.BlobType, buf []byte) (saveBlobResponse, error) {
 	id, known, err := s.repo.SaveBlob(ctx, t, buf, restic.ID{}, false)
-
 	if err != nil {
 		return saveBlobResponse{}, err
 	}

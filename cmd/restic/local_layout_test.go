@@ -11,7 +11,7 @@ func TestRestoreLocalLayout(t *testing.T) {
 	env, cleanup := withTestEnvironment(t)
 	defer cleanup()
 
-	var tests = []struct {
+	tests := []struct {
 		filename string
 		layout   string
 	}{

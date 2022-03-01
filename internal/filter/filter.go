@@ -69,7 +69,6 @@ func Match(pattern, str string) (matched bool, err error) {
 
 	patterns := preparePattern(pattern)
 	strs, err := prepareStr(str)
-
 	if err != nil {
 		return false, err
 	}
@@ -94,7 +93,6 @@ func ChildMatch(pattern, str string) (matched bool, err error) {
 
 	patterns := preparePattern(pattern)
 	strs, err := prepareStr(str)
-
 	if err != nil {
 		return false, err
 	}

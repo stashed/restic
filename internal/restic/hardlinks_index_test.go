@@ -9,7 +9,6 @@ import (
 
 // TestHardLinks contains various tests for HardlinkIndex.
 func TestHardLinks(t *testing.T) {
-
 	idx := restic.NewHardlinkIndex()
 
 	idx.Add(1, 2, "inode1-file1-on-device2")

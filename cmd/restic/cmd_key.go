@@ -75,7 +75,6 @@ func listKeys(ctx context.Context, s *repository.Repository, gopts GlobalOptions
 		keys = append(keys, key)
 		return nil
 	})
-
 	if err != nil {
 		return err
 	}

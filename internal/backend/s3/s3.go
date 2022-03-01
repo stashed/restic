@@ -232,10 +232,10 @@ func (be *Backend) ReadDir(ctx context.Context, dir string) (list []os.FileInfo,
 
 		if name[len(name)-1] == '/' {
 			entry.isDir = true
-			entry.mode = os.ModeDir | 0755
+			entry.mode = os.ModeDir | 0o755
 			entry.name = name[:len(name)-1]
 		} else {
-			entry.mode = 0644
+			entry.mode = 0o644
 		}
 
 		list = append(list, entry)
@@ -491,7 +491,8 @@ func (be *Backend) Delete(ctx context.Context) error {
 		restic.KeyFile,
 		restic.LockFile,
 		restic.SnapshotFile,
-		restic.IndexFile}
+		restic.IndexFile,
+	}
 
 	for _, t := range alltypes {
 		err := be.removeKeys(ctx, t)

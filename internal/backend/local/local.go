@@ -226,7 +226,7 @@ func (b *Local) Remove(ctx context.Context, h restic.Handle) error {
 	fn := b.Filename(h)
 
 	// reset read-only flag
-	err := fs.Chmod(fn, 0666)
+	err := fs.Chmod(fn, 0o666)
 	if err != nil && !os.IsPermission(err) {
 		return errors.WithStack(err)
 	}

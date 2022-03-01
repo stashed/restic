@@ -13,7 +13,7 @@ func TestLayout(t *testing.T) {
 	path, cleanup := rtest.TempDir(t)
 	defer cleanup()
 
-	var tests = []struct {
+	tests := []struct {
 		filename        string
 		layout          string
 		failureExpected bool

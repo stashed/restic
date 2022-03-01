@@ -652,7 +652,7 @@ func runBackup(opts BackupOptions, gopts GlobalOptions, term *termstatus.Termina
 		targetFS = &fs.Reader{
 			ModTime:    timeStamp,
 			Name:       filename,
-			Mode:       0644,
+			Mode:       0o644,
 			ReadCloser: os.Stdin,
 		}
 		targets = []string{filename}

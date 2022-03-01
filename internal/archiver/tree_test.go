@@ -15,7 +15,7 @@ import (
 var _ fmt.Stringer = Tree{}
 
 func TestPathComponents(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		p       string
 		c       []string
 		virtual bool
@@ -103,7 +103,7 @@ func TestPathComponents(t *testing.T) {
 }
 
 func TestRootDirectory(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		target string
 		root   string
 		unix   bool
@@ -139,7 +139,7 @@ func TestRootDirectory(t *testing.T) {
 }
 
 func TestTree(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		targets   []string
 		src       TestDir
 		want      Tree
@@ -306,7 +306,8 @@ func TestTree(t *testing.T) {
 			targets: []string{"foo/work/user2", "foo/work"},
 			want: Tree{Nodes: map[string]Tree{
 				"foo": {Root: ".", FileInfoPath: "foo", Nodes: map[string]Tree{
-					"work": {FileInfoPath: filepath.FromSlash("foo/work"),
+					"work": {
+						FileInfoPath: filepath.FromSlash("foo/work"),
 						Nodes: map[string]Tree{
 							"user1": {Path: filepath.FromSlash("foo/work/user1")},
 							"user2": {Path: filepath.FromSlash("foo/work/user2")},

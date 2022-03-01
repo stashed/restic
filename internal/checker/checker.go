@@ -176,7 +176,6 @@ func (c *Checker) Packs(ctx context.Context, errChan chan<- error) {
 		repoPacks[id] = size
 		return nil
 	})
-
 	if err != nil {
 		errChan <- err
 	}

@@ -22,7 +22,6 @@ func LoadAll(ctx context.Context, buf []byte, be restic.Backend, h restic.Handle
 		buf = wr.Bytes()
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +44,8 @@ func LimitReadCloser(r io.ReadCloser, n int64) *LimitedReadCloser {
 // DefaultLoad implements Backend.Load using lower-level openReader func
 func DefaultLoad(ctx context.Context, h restic.Handle, length int, offset int64,
 	openReader func(ctx context.Context, h restic.Handle, length int, offset int64) (io.ReadCloser, error),
-	fn func(rd io.Reader) error) error {
+	fn func(rd io.Reader) error,
+) error {
 	rd, err := openReader(ctx, h, length, offset)
 	if err != nil {
 		return err

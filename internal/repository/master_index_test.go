@@ -265,7 +265,6 @@ func BenchmarkMasterIndexLookupMultipleIndex(b *testing.B) {
 }
 
 func BenchmarkMasterIndexLookupSingleIndexUnknown(b *testing.B) {
-
 	lookupBh := restic.NewRandomBlobHandle()
 	mIdx, _ := createRandomMasterIndex(b, rand.New(rand.NewSource(0)), 1, 200000)
 

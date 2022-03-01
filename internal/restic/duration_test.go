@@ -7,7 +7,7 @@ import (
 )
 
 func TestNextNumber(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		input string
 		num   int
 		rest  string
@@ -59,7 +59,7 @@ func TestNextNumber(t *testing.T) {
 }
 
 func TestParseDuration(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		input  string
 		d      Duration
 		output string

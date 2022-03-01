@@ -256,7 +256,6 @@ func (arch *Archiver) SaveDir(ctx context.Context, snPath string, fi os.FileInfo
 		oldNode := previous.Find(name)
 		snItem := join(snPath, name)
 		fn, excluded, err := arch.Save(ctx, snItem, pathname, oldNode)
-
 		// return error early if possible
 		if err != nil {
 			err = arch.error(pathname, fi, err)
@@ -566,7 +565,6 @@ func (arch *Archiver) SaveTree(ctx context.Context, snPath string, atree *Tree, 
 		// this is a leaf node
 		if subatree.Leaf() {
 			fn, excluded, err := arch.Save(ctx, join(snPath, name), subatree.Path, previous.Find(name))
-
 			if err != nil {
 				err = arch.error(subatree.Path, fn.fi, err)
 				if err == nil {

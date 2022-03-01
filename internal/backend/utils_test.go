@@ -14,8 +14,10 @@ import (
 	rtest "github.com/restic/restic/internal/test"
 )
 
-const KiB = 1 << 10
-const MiB = 1 << 20
+const (
+	KiB = 1 << 10
+	MiB = 1 << 20
+)
 
 func TestLoadAll(t *testing.T) {
 	b := mem.New()
@@ -61,7 +63,7 @@ func TestLoadAllAppend(t *testing.T) {
 	randomData := rtest.Random(23, rand.Intn(MiB)+500*KiB)
 	h2 := save(t, b, randomData)
 
-	var tests = []struct {
+	tests := []struct {
 		handle restic.Handle
 		buf    []byte
 		want   []byte
@@ -114,13 +116,13 @@ type mockReader struct {
 func (rd *mockReader) Read(p []byte) (n int, err error) {
 	return 0, nil
 }
+
 func (rd *mockReader) Close() error {
 	rd.closed = true
 	return nil
 }
 
 func TestDefaultLoad(t *testing.T) {
-
 	h := restic.Handle{Name: "id", Type: restic.PackFile}
 	rd := &mockReader{}
 

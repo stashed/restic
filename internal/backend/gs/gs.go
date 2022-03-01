@@ -149,7 +149,6 @@ func Create(cfg Config, rt http.RoundTripper) (restic.Backend, error) {
 			// Always an error, as the bucket definitely doesn't exist.
 			return nil, errors.Wrap(err, "service.Buckets.Insert")
 		}
-
 	}
 
 	return be, nil
@@ -425,7 +424,8 @@ func (be *Backend) Delete(ctx context.Context) error {
 		restic.KeyFile,
 		restic.LockFile,
 		restic.SnapshotFile,
-		restic.IndexFile}
+		restic.IndexFile,
+	}
 
 	for _, t := range alltypes {
 		err := be.removeKeys(ctx, t)

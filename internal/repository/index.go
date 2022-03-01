@@ -119,7 +119,6 @@ var IndexFull = func(idx *Index) bool {
 
 	debug.Log("index %p only has %d blobs and is too young (%v)", idx, blobs, age)
 	return false
-
 }
 
 // Store remembers the id and pack in the index.
@@ -166,7 +165,8 @@ func (idx *Index) toPackedBlob(e *indexEntry, t restic.BlobType) restic.PackedBl
 		Blob: restic.Blob{
 			BlobHandle: restic.BlobHandle{
 				ID:   e.id,
-				Type: t},
+				Type: t,
+			},
 			Length: uint(e.length),
 			Offset: uint(e.offset),
 		},
@@ -598,7 +598,8 @@ func DecodeIndex(buf []byte, id restic.ID) (idx *Index, oldFormat bool, err erro
 			idx.store(packID, restic.Blob{
 				BlobHandle: restic.BlobHandle{
 					Type: blob.Type,
-					ID:   blob.ID},
+					ID:   blob.ID,
+				},
 				Offset: blob.Offset,
 				Length: blob.Length,
 			})
@@ -643,7 +644,8 @@ func decodeOldIndex(buf []byte) (idx *Index, err error) {
 			idx.store(packID, restic.Blob{
 				BlobHandle: restic.BlobHandle{
 					Type: blob.Type,
-					ID:   blob.ID},
+					ID:   blob.ID,
+				},
 				Offset: blob.Offset,
 				Length: blob.Length,
 			})

@@ -23,7 +23,7 @@ import (
 )
 
 func mkdir(t testing.TB, dir string) {
-	err := os.MkdirAll(dir, 0700)
+	err := os.MkdirAll(dir, 0o700)
 	if err != nil {
 		t.Fatal(err)
 	}

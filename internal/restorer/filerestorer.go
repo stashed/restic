@@ -63,8 +63,8 @@ type fileRestorer struct {
 func newFileRestorer(dst string,
 	packLoader func(ctx context.Context, h restic.Handle, length int, offset int64, fn func(rd io.Reader) error) error,
 	key *crypto.Key,
-	idx func(restic.BlobHandle) []restic.PackedBlob) *fileRestorer {
-
+	idx func(restic.BlobHandle) []restic.PackedBlob,
+) *fileRestorer {
 	return &fileRestorer{
 		key:         key,
 		idx:         idx,
@@ -100,7 +100,6 @@ func (r *fileRestorer) forEachBlob(blobIDs []restic.ID, fn func(packID restic.ID
 }
 
 func (r *fileRestorer) restoreFiles(ctx context.Context) error {
-
 	packs := make(map[restic.ID]*packInfo) // all packs
 	// Process packs in order of first access. While this cannot guarantee
 	// that file chunks are restored sequentially, it offers a good enough
@@ -177,7 +176,6 @@ func (r *fileRestorer) restoreFiles(ctx context.Context) error {
 const maxBufferSize = 4 * 1024 * 1024
 
 func (r *fileRestorer) downloadPack(ctx context.Context, pack *packInfo) error {
-
 	// calculate pack byte range and blob->[]files->[]offsets mappings
 	start, end := int64(math.MaxInt64), int64(0)
 	blobs := make(map[restic.ID]struct {
@@ -300,7 +298,6 @@ func (r *fileRestorer) downloadPack(ctx context.Context, pack *packInfo) error {
 		}
 		return nil
 	})
-
 	if err != nil {
 		for file := range pack.files {
 			if errFile := sanitizeError(file, err); errFile != nil {

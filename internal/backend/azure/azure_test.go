@@ -183,7 +183,7 @@ func TestUploadLargeFile(t *testing.T) {
 		}
 	}()
 
-	var tests = []struct {
+	tests := []struct {
 		offset, length int
 	}{
 		{0, len(data)},

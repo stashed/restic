@@ -28,7 +28,7 @@ func TestFileReader(t *testing.T) {
 	defer cleanup()
 
 	filename := filepath.Join(d, "file-reader-test")
-	err := ioutil.WriteFile(filename, []byte("foobar"), 0600)
+	err := ioutil.WriteFile(filename, []byte("foobar"), 0o600)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -62,7 +62,7 @@ func testRewindReader(t *testing.T, fn func() RewindReader, data []byte) {
 	rnd := rand.New(rand.NewSource(seed))
 
 	type ReaderTestFunc func(t testing.TB, r RewindReader, data []byte)
-	var tests = []ReaderTestFunc{
+	tests := []ReaderTestFunc{
 		func(t testing.TB, rd RewindReader, data []byte) {
 			if rd.Length() != int64(len(data)) {
 				t.Fatalf("wrong length returned, want %d, got %d", int64(len(data)), rd.Length())

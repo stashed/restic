@@ -6,7 +6,7 @@ import (
 )
 
 func TestParseConfig(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		s   string
 		cfg Config
 	}{

@@ -1,3 +1,4 @@
+//go:build darwin || freebsd || linux
 // +build darwin freebsd linux
 
 package fuse
@@ -61,14 +62,17 @@ type snapshotLink struct {
 
 // ensure that *SnapshotsDir implements these interfaces
 var _ = fs.HandleReadDirAller(&SnapshotsDir{})
-var _ = fs.NodeStringLookuper(&SnapshotsDir{})
-var _ = fs.HandleReadDirAller(&SnapshotsIDSDir{})
-var _ = fs.NodeStringLookuper(&SnapshotsIDSDir{})
-var _ = fs.HandleReadDirAller(&TagsDir{})
-var _ = fs.NodeStringLookuper(&TagsDir{})
-var _ = fs.HandleReadDirAller(&HostsDir{})
-var _ = fs.NodeStringLookuper(&HostsDir{})
-var _ = fs.NodeReadlinker(&snapshotLink{})
+
+var (
+	_ = fs.NodeStringLookuper(&SnapshotsDir{})
+	_ = fs.HandleReadDirAller(&SnapshotsIDSDir{})
+	_ = fs.NodeStringLookuper(&SnapshotsIDSDir{})
+	_ = fs.HandleReadDirAller(&TagsDir{})
+	_ = fs.NodeStringLookuper(&TagsDir{})
+	_ = fs.HandleReadDirAller(&HostsDir{})
+	_ = fs.NodeStringLookuper(&HostsDir{})
+	_ = fs.NodeReadlinker(&snapshotLink{})
+)
 
 // read tag names from the current repository-state.
 func updateTagNames(d *TagsDir) {
@@ -162,7 +166,7 @@ func NewTagsDir(root *Root, inode uint64) *TagsDir {
 // Attr returns the attributes for the root node.
 func (d *SnapshotsDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 	attr.Inode = d.inode
-	attr.Mode = os.ModeDir | 0555
+	attr.Mode = os.ModeDir | 0o555
 	attr.Uid = d.root.uid
 	attr.Gid = d.root.gid
 
@@ -173,7 +177,7 @@ func (d *SnapshotsDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 // Attr returns the attributes for the SnapshotsDir.
 func (d *SnapshotsIDSDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 	attr.Inode = d.inode
-	attr.Mode = os.ModeDir | 0555
+	attr.Mode = os.ModeDir | 0o555
 	attr.Uid = d.root.uid
 	attr.Gid = d.root.gid
 
@@ -184,7 +188,7 @@ func (d *SnapshotsIDSDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 // Attr returns the attributes for the HostsDir.
 func (d *HostsDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 	attr.Inode = d.inode
-	attr.Mode = os.ModeDir | 0555
+	attr.Mode = os.ModeDir | 0o555
 	attr.Uid = d.root.uid
 	attr.Gid = d.root.gid
 
@@ -195,7 +199,7 @@ func (d *HostsDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 // Attr returns the attributes for the TagsDir.
 func (d *TagsDir) Attr(ctx context.Context, attr *fuse.Attr) error {
 	attr.Inode = d.inode
-	attr.Mode = os.ModeDir | 0555
+	attr.Mode = os.ModeDir | 0o555
 	attr.Uid = d.root.uid
 	attr.Gid = d.root.gid
 
@@ -438,7 +442,7 @@ func (l *snapshotLink) Readlink(ctx context.Context, req *fuse.ReadlinkRequest) 
 // Attr
 func (l *snapshotLink) Attr(ctx context.Context, a *fuse.Attr) error {
 	a.Inode = l.inode
-	a.Mode = os.ModeSymlink | 0777
+	a.Mode = os.ModeSymlink | 0o777
 	a.Uid = l.root.uid
 	a.Gid = l.root.gid
 	a.Atime = l.snapshot.Time

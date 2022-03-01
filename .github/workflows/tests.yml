@@ -141,15 +141,7 @@ jobs:
       - name: Test cloud backends
         env:
           # fail if any of the following tests cannot be run
-          RESTIC_TEST_DISALLOW_SKIP: "restic/backend/rest.TestBackendREST,\
-            restic/backend/sftp.TestBackendSFTP,\
-            restic/backend/s3.TestBackendMinio,\
-            restic/backend/rclone.TestBackendRclone,\
-            restic/backend/s3.TestBackendS3,\
-            restic/backend/swift.TestBackendSwift,\
-            restic/backend/b2.TestBackendB2,\
-            restic/backend/gs.TestBackendGS,\
-            restic/backend/azure.TestBackendAzure"
+          RESTIC_TEST_DISALLOW_SKIP: "restic/backend/rest.TestBackendREST,restic/backend/sftp.TestBackendSFTP,restic/backend/s3.TestBackendMinio,restic/backend/rclone.TestBackendRclone,restic/backend/s3.TestBackendS3,restic/backend/swift.TestBackendSwift,restic/backend/b2.TestBackendB2,restic/backend/gs.TestBackendGS,restic/backend/azure.TestBackendAzure"
         run: |
           # write test credentials into .env file
           echo ${{ secrets.RESTIC_TEST_CREDENTIALS }} >> $(pwd)/.env

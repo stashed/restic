@@ -1,3 +1,4 @@
+//go:build !windows
 // +build !windows
 
 package restic
@@ -24,8 +25,8 @@ func stat(t testing.TB, filename string) (fi os.FileInfo, ok bool) {
 }
 
 func checkFile(t testing.TB, stat *syscall.Stat_t, node *Node) {
-	if uint32(node.Mode.Perm()) != uint32(stat.Mode&0777) {
-		t.Errorf("Mode does not match, want %v, got %v", stat.Mode&0777, node.Mode)
+	if uint32(node.Mode.Perm()) != uint32(stat.Mode&0o777) {
+		t.Errorf("Mode does not match, want %v, got %v", stat.Mode&0o777, node.Mode)
 	}
 
 	if node.Inode != uint64(stat.Ino) {
@@ -72,7 +73,6 @@ func checkFile(t testing.TB, stat *syscall.Stat_t, node *Node) {
 	if node.AccessTime != time.Unix(atime.Unix()) {
 		t.Errorf("AccessTime does not match, want %v, got %v", time.Unix(atime.Unix()), node.AccessTime)
 	}
-
 }
 
 func checkDevice(t testing.TB, stat *syscall.Stat_t, node *Node) {
@@ -86,7 +86,7 @@ func TestNodeFromFileInfo(t *testing.T) {
 		filename string
 		canSkip  bool
 	}
-	var tests = []Test{
+	tests := []Test{
 		{"node_test.go", false},
 		{"/dev/sda", true},
 	}

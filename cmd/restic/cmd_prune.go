@@ -13,9 +13,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var errorIndexIncomplete = errors.Fatal("index is not complete")
-var errorPacksMissing = errors.Fatal("packs from index missing in repo")
-var errorSizeNotMatching = errors.Fatal("pack size does not match calculated size from index")
+var (
+	errorIndexIncomplete = errors.Fatal("index is not complete")
+	errorPacksMissing    = errors.Fatal("packs from index missing in repo")
+	errorSizeNotMatching = errors.Fatal("pack size does not match calculated size from index")
+)
 
 var cmdPrune = &cobra.Command{
 	Use:   "prune [flags]",

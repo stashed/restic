@@ -69,7 +69,7 @@ func rm(file string) {
 }
 
 func mkdir(dir string) {
-	err := os.MkdirAll(dir, 0755)
+	err := os.MkdirAll(dir, 0o755)
 	if err != nil {
 		die("mkdir %v: %v", dir, err)
 	}
@@ -181,7 +181,7 @@ func buildForTarget(sourceDir, outputDir, goos, goarch string) (filename string)
 
 	filename = build(sourceDir, outputDir, goos, goarch)
 	touch(filepath.Join(outputDir, filename), mtime)
-	chmod(filepath.Join(outputDir, filename), 0755)
+	chmod(filepath.Join(outputDir, filename), 0o755)
 	filename = compress(goos, outputDir, filename)
 	return filename
 }

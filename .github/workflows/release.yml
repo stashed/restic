@@ -58,5 +58,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           fail_on_unmatched_files: true
-          body:  ${{steps.changelog-builder.outputs.changelog}}
+          body: ${{steps.changelog-builder.outputs.changelog}}
           files: ${{env.WORKING_DIR}}/.go/bin/restic_*

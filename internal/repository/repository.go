@@ -102,7 +102,6 @@ func (r *Repository) LoadAndDecrypt(ctx context.Context, buf []byte, t restic.Fi
 		buf = wr.Bytes()
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -454,7 +453,6 @@ func (r *Repository) LoadIndex(ctx context.Context) error {
 		r.idx.Insert(idx)
 		return nil
 	})
-
 	if err != nil {
 		return errors.Fatal(err.Error())
 	}
@@ -701,7 +699,6 @@ func (r *Repository) Close() error {
 // If id is the null id, it will be computed and returned.
 // Also returns if the blob was already known before
 func (r *Repository) SaveBlob(ctx context.Context, t restic.BlobType, buf []byte, id restic.ID, storeDuplicate bool) (newID restic.ID, known bool, err error) {
-
 	// compute plaintext hash if not already set
 	if id.IsNull() {
 		newID = restic.Hash(buf)

@@ -83,7 +83,6 @@ func (fs *LocalVss) Lstat(name string) (os.FileInfo, error) {
 // If creation of a snapshot fails the file's original path is returned as
 // a fallback.
 func (fs *LocalVss) snapshotPath(path string) string {
-
 	fixPath := fixpath(path)
 
 	if strings.HasPrefix(fixPath, `\\?\UNC\`) {

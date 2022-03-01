@@ -92,12 +92,12 @@ func (c *Cache) saveWriter(h restic.Handle) (io.WriteCloser, error) {
 	}
 
 	p := c.filename(h)
-	err := fs.MkdirAll(filepath.Dir(p), 0700)
+	err := fs.MkdirAll(filepath.Dir(p), 0o700)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
-	f, err := fs.OpenFile(p, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0400)
+	f, err := fs.OpenFile(p, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o400)
 	return f, errors.WithStack(err)
 }
 

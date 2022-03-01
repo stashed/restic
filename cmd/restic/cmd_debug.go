@@ -1,3 +1,4 @@
+//go:build debug
 // +build debug
 
 package main
@@ -47,9 +48,11 @@ Exit status is 0 if the command was successful, and non-zero if there was any er
 	},
 }
 
-var tryRepair bool
-var repairByte bool
-var extractPack bool
+var (
+	tryRepair   bool
+	repairByte  bool
+	extractPack bool
+)
 
 func init() {
 	cmdRoot.AddCommand(cmdDebug)
@@ -98,7 +101,6 @@ type Blob struct {
 }
 
 func printPacks(ctx context.Context, repo *repository.Repository, wr io.Writer) error {
-
 	return repo.List(ctx, restic.PackFile, func(id restic.ID, size int64) error {
 		h := restic.Handle{Type: restic.PackFile, Name: id.String()}
 

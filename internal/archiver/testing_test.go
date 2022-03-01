@@ -56,14 +56,14 @@ func (t *MockT) Errorf(msg string, args ...interface{}) {
 func createFilesAt(t testing.TB, targetdir string, files map[string]interface{}) {
 	for name, item := range files {
 		target := filepath.Join(targetdir, filepath.FromSlash(name))
-		err := fs.MkdirAll(filepath.Dir(target), 0700)
+		err := fs.MkdirAll(filepath.Dir(target), 0o700)
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		switch it := item.(type) {
 		case TestFile:
-			err := ioutil.WriteFile(target, []byte(it.Content), 0600)
+			err := ioutil.WriteFile(target, []byte(it.Content), 0o600)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -81,7 +81,7 @@ func createFilesAt(t testing.TB, targetdir string, files map[string]interface{})
 }
 
 func TestTestCreateFiles(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		dir   TestDir
 		files map[string]interface{}
 	}{
@@ -112,7 +112,7 @@ func TestTestCreateFiles(t *testing.T) {
 
 		t.Run("", func(t *testing.T) {
 			tempdir := filepath.Join(tempdir, fmt.Sprintf("test-%d", i))
-			err := fs.MkdirAll(tempdir, 0700)
+			err := fs.MkdirAll(tempdir, 0o700)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -176,7 +176,7 @@ func TestTestCreateFiles(t *testing.T) {
 }
 
 func TestTestWalkFiles(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		dir  TestDir
 		want map[string]string
 	}{
@@ -229,7 +229,7 @@ func TestTestWalkFiles(t *testing.T) {
 }
 
 func TestTestEnsureFiles(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		expectFailure bool
 		files         map[string]interface{}
 		want          TestDir
@@ -364,7 +364,7 @@ func TestTestEnsureFiles(t *testing.T) {
 }
 
 func TestTestEnsureSnapshot(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		expectFailure bool
 		files         map[string]interface{}
 		want          TestDir
@@ -488,7 +488,7 @@ func TestTestEnsureSnapshot(t *testing.T) {
 			defer cleanup()
 
 			targetDir := filepath.Join(tempdir, "target")
-			err := fs.Mkdir(targetDir, 0700)
+			err := fs.Mkdir(targetDir, 0o700)
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -24,10 +24,8 @@ const (
 	Extension = ivSize + macSize
 )
 
-var (
-	// ErrUnauthenticated is returned when ciphertext verification has failed.
-	ErrUnauthenticated = errors.New("ciphertext verification failed")
-)
+// ErrUnauthenticated is returned when ciphertext verification has failed.
+var ErrUnauthenticated = errors.New("ciphertext verification failed")
 
 // Key holds encryption and message authentication keys for a repository. It is stored
 // encrypted and authenticated as a JSON data structure in the Data field of the Key

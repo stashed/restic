@@ -178,7 +178,7 @@ func TestFSReader(t *testing.T) {
 	now := time.Now()
 	filename := "foobar"
 
-	var tests = []struct {
+	tests := []struct {
 		name string
 		f    func(t *testing.T, fs FS)
 	}{
@@ -198,7 +198,7 @@ func TestFSReader(t *testing.T) {
 			name: "Readdir-slash",
 			f: func(t *testing.T, fs FS) {
 				fi := fakeFileInfo{
-					mode:    0644,
+					mode:    0o644,
 					modtime: now,
 					name:    filename,
 					size:    int64(len(data)),
@@ -210,7 +210,7 @@ func TestFSReader(t *testing.T) {
 			name: "Readdir-current",
 			f: func(t *testing.T, fs FS) {
 				fi := fakeFileInfo{
-					mode:    0644,
+					mode:    0o644,
 					modtime: now,
 					name:    filename,
 					size:    int64(len(data)),
@@ -238,7 +238,7 @@ func TestFSReader(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				checkFileInfo(t, fi, filename, now, 0644, false)
+				checkFileInfo(t, fi, filename, now, 0o644, false)
 			},
 		},
 		{
@@ -259,7 +259,7 @@ func TestFSReader(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				checkFileInfo(t, fi, filename, now, 0644, false)
+				checkFileInfo(t, fi, filename, now, 0o644, false)
 			},
 		},
 		{
@@ -270,7 +270,7 @@ func TestFSReader(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				checkFileInfo(t, fi, "/", time.Time{}, os.ModeDir|0755, true)
+				checkFileInfo(t, fi, "/", time.Time{}, os.ModeDir|0o755, true)
 			},
 		},
 		{
@@ -281,7 +281,7 @@ func TestFSReader(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				checkFileInfo(t, fi, ".", time.Time{}, os.ModeDir|0755, true)
+				checkFileInfo(t, fi, ".", time.Time{}, os.ModeDir|0o755, true)
 			},
 		},
 		{
@@ -301,7 +301,7 @@ func TestFSReader(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				checkFileInfo(t, fi, "/", time.Time{}, os.ModeDir|0755, true)
+				checkFileInfo(t, fi, "/", time.Time{}, os.ModeDir|0o755, true)
 			},
 		},
 		{
@@ -312,7 +312,7 @@ func TestFSReader(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				checkFileInfo(t, fi, ".", time.Time{}, os.ModeDir|0755, true)
+				checkFileInfo(t, fi, ".", time.Time{}, os.ModeDir|0o755, true)
 			},
 		},
 	}
@@ -322,7 +322,7 @@ func TestFSReader(t *testing.T) {
 			Name:       filename,
 			ReadCloser: ioutil.NopCloser(bytes.NewReader(data)),
 
-			Mode:    0644,
+			Mode:    0o644,
 			Size:    int64(len(data)),
 			ModTime: now,
 		}
@@ -337,7 +337,7 @@ func TestFSReaderDir(t *testing.T) {
 	data := test.Random(55, 1<<18+588)
 	now := time.Now()
 
-	var tests = []struct {
+	tests := []struct {
 		name     string
 		filename string
 	}{
@@ -357,7 +357,7 @@ func TestFSReaderDir(t *testing.T) {
 				Name:       test.filename,
 				ReadCloser: ioutil.NopCloser(bytes.NewReader(data)),
 
-				Mode:    0644,
+				Mode:    0o644,
 				Size:    int64(len(data)),
 				ModTime: now,
 			}
@@ -373,7 +373,7 @@ func TestFSReaderDir(t *testing.T) {
 					t.Fatal(err)
 				}
 
-				checkFileInfo(t, fi, dir, time.Time{}, os.ModeDir|0755, true)
+				checkFileInfo(t, fi, dir, time.Time{}, os.ModeDir|0o755, true)
 
 				dir = path.Dir(dir)
 			}
@@ -382,7 +382,7 @@ func TestFSReaderDir(t *testing.T) {
 }
 
 func TestFSReaderMinFileSize(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		name        string
 		data        string
 		allowEmpty  bool
@@ -411,7 +411,7 @@ func TestFSReaderMinFileSize(t *testing.T) {
 			fs := &Reader{
 				Name:           "testfile",
 				ReadCloser:     ioutil.NopCloser(strings.NewReader(test.data)),
-				Mode:           0644,
+				Mode:           0o644,
 				ModTime:        time.Now(),
 				AllowEmptyFile: test.allowEmpty,
 			}

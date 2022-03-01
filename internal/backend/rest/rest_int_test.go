@@ -15,7 +15,7 @@ import (
 )
 
 func TestListAPI(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		Name string
 
 		ContentType string // response header

@@ -60,7 +60,6 @@ func (mi *MasterIndex) LookupSize(bh restic.BlobHandle) (uint, bool) {
 // Returns true if adding was successful and false if the blob
 // was already known
 func (mi *MasterIndex) addPending(bh restic.BlobHandle) bool {
-
 	mi.idxMutex.Lock()
 	defer mi.idxMutex.Unlock()
 

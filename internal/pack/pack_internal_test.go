@@ -56,7 +56,6 @@ func (rd *countingReaderAt) ReadAt(p []byte, off int64) (n int, err error) {
 }
 
 func TestReadHeaderEagerLoad(t *testing.T) {
-
 	testReadHeader := func(dataSize, entryCount, expectedReadInvocationCount int) {
 		expectedHeader := rtest.Random(0, entryCount*int(EntrySize)+crypto.Extension)
 

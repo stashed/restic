@@ -1,10 +1,9 @@
+//go:build debug
 // +build debug
 
 package debug
 
-var (
-	hooks map[string]func(interface{})
-)
+var hooks map[string]func(interface{})
 
 func init() {
 	hooks = make(map[string]func(interface{}))

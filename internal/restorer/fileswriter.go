@@ -53,7 +53,7 @@ func (w *filesWriter) writeToFile(path string, blob []byte, offset int64, create
 			flags = os.O_WRONLY
 		}
 
-		wr, err := os.OpenFile(path, flags, 0600)
+		wr, err := os.OpenFile(path, flags, 0o600)
 		if err != nil {
 			return nil, err
 		}

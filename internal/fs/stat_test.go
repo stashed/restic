@@ -13,7 +13,7 @@ func TestExtendedStat(t *testing.T) {
 	defer cleanup()
 
 	filename := filepath.Join(tempdir, "file")
-	err := ioutil.WriteFile(filename, []byte("foobar"), 0640)
+	err := ioutil.WriteFile(filename, []byte("foobar"), 0o640)
 	if err != nil {
 		t.Fatal(err)
 	}
